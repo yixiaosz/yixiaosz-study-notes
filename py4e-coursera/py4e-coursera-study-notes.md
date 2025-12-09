@@ -561,7 +561,7 @@ print( sum( [ int(num) for num in re.findall('[0-9]+', open("regex_sum_2338600.t
 
 ## 6. Internet Architecture
 
-![internet-structure](/Users/yixiaozhang/python-intro/internet-structure.jpeg)
+![internet-structure](internet-structure.jpeg)
 
 ### Build TCP Sockets
 
@@ -1116,7 +1116,7 @@ for row in cur.execute(sqlstr):
 - Logical key (a unique name/title for external-initiated search)
 - Foreign key(locates one of the columns we added to a row)
 
-<img src="/Users/yixiaozhang/python-intro/database-key-sample.jpg" alt="database-key-sample" style="zoom: 33%;" />
+<img src="database-key-sample.jpg" alt="database-key-sample" style="zoom: 33%;" />
 
 - When creating a table, always **start creation from the ends of the arrows** (artist --> arbum -- Genre --> Track) to avoid missing dependencies
 
@@ -1138,7 +1138,7 @@ select Album.title, Artist.name from Album join Artist on Album.artist_id = Arti
 
 - A connection/junction table with two foreign keys is required
 
-<img src="/Users/yixiaozhang/python-intro/db-many-sample.jpg" alt="db-many-sample" style="zoom:33%;" />
+<img src="db-many-sample.jpg" alt="db-many-sample" style="zoom:33%;" />
 
 ```sqlite
 -- create two regular tables
