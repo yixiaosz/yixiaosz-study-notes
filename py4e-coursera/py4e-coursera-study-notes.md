@@ -170,7 +170,7 @@ print(mylist)
 - Double split
 
 ```python
-line = "from yixiao.zhang@gatech.edu Sat Jan 25"
+line = "from yixiao@gatech.edu Sat Jan 25"
 words = line.split()
 email = words[1]
 pieces = email.split["@"]
