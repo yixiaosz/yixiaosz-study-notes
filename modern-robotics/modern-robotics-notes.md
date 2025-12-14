@@ -20,17 +20,19 @@ Definitions:
 
 **# of DoF = sum(freedoms of points) - (# of independent constraint)**
 
-General Rule: The Dimension of the C-Space or the # of DoF equals the sum of the freedoms of the points minus the number of independent constraints acting on those points. 
+- General Rule: The Dimension of the C-Space or the # of DoF equals the sum of the freedoms of the points minus the number of independent constraints acting on those points. 
 
-For just rigid bodies (applied to this course): 
-$$
-\text{\# of dof} = \sum(\text{freedoms of bodies}) - (\text{\# of independent constraints})
-$$
-A planar rigid body has 3 DoF, and **a spatial rigid body has 6 DoF**:
+- For just rigid bodies (applied to this course): 
+
+​	$\text{\# of dof} = \sum(\text{freedoms of bodies}) - (\text{\# of independent constraints})$
+
+
+
+- A planar rigid body has 3 DoF, and **a spatial rigid body has 6 DoF**:
 
 ![image-20251213213658618](assets/rigid-body-dof.jpg)
 
-**The # of DoF** 
+- **The # of DoF** 
 
 ​	= **the dimension of its C-Space** 
 
@@ -40,15 +42,17 @@ A planar rigid body has 3 DoF, and **a spatial rigid body has 6 DoF**:
 
 
 
-**A rigid body in n-dimensional space has m total degrees of freedom. How many of these m degrees of freedom are angular (not linear)?**
+- **A rigid body in n-dimensional space has m total degrees of freedom. How many of these m degrees of freedom are angular (not linear)?**
 
-- `m-n`
+  - `m-n`
 
-  n linear coordinates specify the location of one point of the rigid body, and the remaining m - n coordinates are subject to radius constraints, and hence as angular coordinates
+    n linear coordinates specify the location of one point of the rigid body, and the remaining m - n coordinates are subject to radius constraints, and hence as angular coordinates
 
-- `n(n-1)/2`
 
-  The general formula for calculating # of angular DoF, so it’s equivalent to `m-n`
+  - `n(n-1)/2`
+
+    The general formula for calculating # of angular DoF, so it’s equivalent to `m-n`
+
 
 
 
@@ -69,22 +73,23 @@ A planar rigid body has 3 DoF, and **a spatial rigid body has 6 DoF**:
 
 #### Grübler’s formula
 
-- determining the number of degrees of freedom of a robot, simply by counting the number of rigid bodies and joints.
+- determining the number of degrees of freedom of a robot, simply by counting the number of rigid bodies and joints. 
 
 - As we already known:
-  $$
-  \text{\# of dof} = \sum(\text{freedoms of bodies}) - (\text{\# of independent constraints})
-  $$
-
+  
+  $\text{\# of dof} = \sum(\text{freedoms of bodies}) - (\text{\# of independent constraints})$
+  
+  
+  
 - All constraints must be independent, otherwise this formula fails
 
-$$
-\text{\# of dof} = \underbrace{m(N-1)}_{\text{rigid body freedoms}} - \underbrace{\sum_{i=1}^{J} c_i}_{\text{joint constraints}}
-\newline
-= m(N-1)-\sum_{i=1}^{J}(m-f_i)
-\newline
-= m(N-1-J)+\sum_{i=1}^{J}(f_i)
-$$
+  $\text{\# of dof} = \underbrace{m(N-1)}_{\text{rigid body freedoms}} - \underbrace{\sum_{i=1}^{J} c_i}_{\text{joint constraints}}
+  \newline
+  = m(N-1)-\sum_{i=1}^{J}(m-f_i)
+  \newline
+  = m(N-1-J)+\sum_{i=1}^{J}(f_i)$
+
+
 
 $N$ = # of bodies, including ground 
 
