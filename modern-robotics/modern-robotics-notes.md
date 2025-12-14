@@ -13,18 +13,18 @@ Last edit: 12/13/2025
 Definitions: 
 
 - The **configuration of a robot** is a complete **specification** of the position of every point of the robot.
-- The **# of DoF** is minimum number of real-valued (independent) coordinates that represent the configuration.
+- The **number of DoF** is minimum number of real-valued (independent) coordinates that represent the configuration.
 - The **Configuration Space (C-Space)** is the #-dimensional space that contains all of the robot’s configuration. 
 
 ### 2.1 DoF of a rigid body
 
-**# of DoF = sum(freedoms of points) - (# of independent constraint)**
+**number of DoF = sum(freedoms of points) - (number of independent constraint)**
 
 - General Rule: The Dimension of the C-Space or the # of DoF equals the sum of the freedoms of the points minus the number of independent constraints acting on those points. 
 
 - For just rigid bodies (applied to this course): 
 
-​	$\text{\# of dof} = \sum(\text{freedoms of bodies}) - (\text{\# of independent constraints})$
+​	$\text{number of dof} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
 
 
 
@@ -77,13 +77,13 @@ Definitions:
 
 - As we already known:
   
-  $\text{\# of dof} = \sum(\text{freedoms of bodies}) - (\text{\# of independent constraints})$
+  $\text{number of dof} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
   
   
   
 - All constraints must be independent, otherwise this formula fails
 
-  $\text{\# of dof} = \underbrace{m(N-1)}_{\text{rigid body freedoms}} - \underbrace{\sum_{i=1}^{J} c_i}_{\text{joint constraints}}
+  $\text{dof} = \underbrace{m(N-1)}_{\text{rigid body freedoms}} - \underbrace{\sum_{i=1}^{J} c_i}_{\text{joint constraints}}
   \newline
   = m(N-1)-\sum_{i=1}^{J}(m-f_i)
   \newline
