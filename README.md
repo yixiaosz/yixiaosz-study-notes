@@ -10,6 +10,7 @@ I manage and sync my learning notes (markdown files) here.
 
 ### 2025
 
+- [Robotics] Modern Robotics
 - [Coding] Python for Everyone Coursera
 
 ### 2024
