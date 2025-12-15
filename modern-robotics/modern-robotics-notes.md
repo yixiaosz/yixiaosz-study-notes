@@ -71,7 +71,7 @@ Definitions:
 
 
 
-#### Grübler’s formula
+#### Grubler’s formula
 
 - determining the number of degrees of freedom of a robot, simply by counting the number of rigid bodies and joints. 
 
@@ -127,7 +127,7 @@ m = 6, N = 10, J = 12
 
 sum(f_i) = 7 * 4 = 28
 
-DoF = 6(10 - 1 - 12) + 28 = 10
+Using [Grubler’s formula](#grubler's-formula): DoF = 6(10 - 1 - 12) + 28 = 10
 
 **if there’re n arms**: DoF = 6(2+2n-1-3n)+7n = n+6
 
@@ -147,23 +147,191 @@ DoF = 6(10 - 1 - 12) + 28 = 10
   - $R^n$ is the $n$-dimensional Euclinean space
   - $S^n$ is the $n$-dimensional surface of a sphere in an $(n+1)$-dimensional space (e.g. $S^2$ is the 2-D surface of a sphere in a 3-D space)
 - The topology of a space is **a fundamental property of the space** itself.
-- The topology of a space is **independent of how we choose coordinates** to represent points in the space (e.g. ($x,y$) with constraint $x^2+y^2=1$)
+- The topology of a space is **independent of how we choose coordinates** to represent points in the space (e.g. ($x,y$) with constraint $x^2+y^2=1$) 
 
-<img src="assets/c-space-topology.jpg" alt="c-space-topology" style="zoom:50%;" />
+![c-space-topology](assets/c-space-topology.jpg)
 
 #### C-space as Cartesian Product 
 
-- Used to represent a C-space with two or more spaces of lower dimension
-- a rigid body in the plane is $R^2\times S^1$: the concatenation of a 2D coordinate (x,y) and an angle $\theta$ representing $S^1$
-- a PR (Prismatic + Revolute) robot arm is $R^1 \times S^1$: note the joints may have travel bounds
-- a RR robot arm is $S^1 \times S^1 = T^2$: 
+- Used to represent a C-space with two or more spaces of lower dimension.
 
-#### C-Space representation
+- ==a rigid body in the plane is $R^2\times S^1$==: the concatenation of a 2D coordinate (x,y) and an angle $\theta$ representing $S^1$.
+
+- ==a rigid body in the 3D space is $R^3 \times S^2 \times S^1$==.  
+
+  > Note that $S^n \times S^1 \neq S^{n+1}$.
+
+  - a point in $R^3$, plus a point on a two-dimensional sphere $S^2$, plus a point on a one-dimensional circle $S^2$.
+
+- a PR (Prismatic + Revolute) robot arm is $R^1 \times S^1$. 
+
+  - if mounted on a planar rigid body, the C-space is $(R^2 \times S^1) \times (R^1\times S^1) = R^2 \times T^2$. 
+  - if mounted on a spatial rigid body, the C-space is $(R^3 \times S^2 \times S^1) \times (R^1\times S^1) = R^4 \times S^2 \times T^2$.
+
+- a RR robot arm is ==$S^1 \times S^1 = T^2$==. 
+
+  > Note that $T^n \times S^1 = T^{n+1}$.
+
+#### Numerical representation of C-Space 
 
 - **Explicit parametrization**: minimum number of coordinates 
   - simplicity, but may have poor behavior because the space change
-  - e.g. latitute, longitude to reprensent a sphere.
-- **Implicit parametrization**: a surface embedded in a higher-dimensional space 
-  - Best for curved shape
-  - e.g. $(x,y,z)$ with constraint $x^2+y^2+z^2=1$ to represent a sphere.
 
+- **Example: to represent the C-space of the surface of a sphere** (pendulum with one fixed end)
+
+  - Explicit: [-90º, 90º] for latitute, [-180º, 180º] for longitude
+    - near north and south pole, a very small step gives large changes in coordinates
+    - near equator, a large step gives small changes in coordinates
+    - the north and south pole are **sigularities** of the representation, loss of dimension, which is problematic
+
+- How to avoid the singularity problem?
+
+  - A. Use **more than one coordinate chart** on the space, each covering only a portion of the space
+    - form an **atlas** with multiple charts: always uses the minimum number of numbers
+
+  - B. Use implicit parametrization
+
+#### Implicit parametrization
+
+Make a surface embedded in a higher-dimensional space. (the major perametrization in this book)
+
+- Implicit parametrization of a 2D sphere surface in 3D space: $(x,y,z)$ with constraint $x^2+y^2+z^2=1$ 
+- Advantage: Best for curved shape. No singularies. No need for multiple coordinate charts, hence no atlas
+- **For robots containing one or more closed loops**, usually an implicit representation is more easily obtained than an explicit parametrization.
+- Drawback: the representation has more numbers than the number of DoF
+
+**Implicit representation of a rigid body in space**
+
+- **the rotation matrix**: 9 numbers, subject to 6 constraints (in a 9-6=3 dimension space)
+- able to use linear algebra to perform roation or change of reference frame
+
+
+
+### 2.4 Configuration and Velocity Constraints
+
+![four-bar-linkage](assets/four-bar-linkage.jpg)
+
+This four-bar linkage can be viewed as a serial chain with 4 revolute joints that:
+
+​	(1) the top of linnk $L_4$ always coincides with the origin
+
+​	(2) the orientation of $L_4$ is always horizontal. 
+
+> From Grubler’s formula, we knew this mechanism has **1 DoF** in 2D space. 
+
+- Dimensional space: 4-D space
+
+  $ \boldsymbol{\theta} = \begin{bmatrix} \theta_1 \\ \theta_2 \\ \theta_3 \\ \theta_4 \end{bmatrix} \in \mathbb{R}^4 $   
+
+- The **absolute angles** of each linkage:
+  - angle of L1: $\theta_1$ 
+  - angle of L3: $\theta_1+\theta_2$ 
+  - angle of L4: $\theta_1+\theta_2+\theta_3$ 
+  - angle of L5: $\theta_1+\theta_2+\theta_3+\theta_4$ 
+
+- **The X-axis constraint** (for position):
+
+  > knowing that x-axis component $x = L\cdot cos(\theta)$ and the linkage have no horizontal movement (=0)
+  >
+  > L = distance travelled
+
+  (1) $L_1 \cos\theta_1 + L_2 \cos(\theta_1 + \theta_2) + \dots + L_4 \cos(\theta_1 + \dots + \theta_4) = 0$ 
+
+- **The Y-axis constraint** (for position): 
+
+  > knowing that y-axis component $y = L\cdot sin(\theta) $ and the linkage have no vertical movement (=0)
+
+  (2) $L_1 \sin\theta_1 + L_2 \sin(\theta_1 + \theta_2) + \dots + L_4 \sin(\theta_1 + \dots + \theta_4) = 0$ 
+
+- **The angular constraint** (for orientation):
+
+  > Because both ends are on the ground, the sum of angles is a whole loop $2\pi$
+
+  (3) $\theta_1 + \theta_2 + \theta_3 + \theta_4 - 2\pi = 0$ 
+
+- (1), (2), (3) are referred to as the **loop-closure equations**
+  - Exist in a four joint space AKA **a 4D space** : ($\theta_1, \theta_2, \theta_3, \theta_4$)
+  - **there’re 3 equations, b ut have 4 unknowns**, meaning the system is not locked, and has 1 DOF
+  - Hence **the C-space of this 4-bar linkage is just a one-dimensional curve** in a 4-dimensional joint space.
+
+- Thus, the 4-bar linkage can be represented by 4 dimensional joint space (in the form of column vector below) subject to 3 loop constraints.
+
+
+
+#### Holonomic Constraints
+
+- **general scenario**: $ \boldsymbol{\theta} = \begin{bmatrix} \theta_1 \\ \theta_2 \\ ... \\ \theta_n \end{bmatrix} \in \mathbb{R}^n $ 
+
+- **The Close-loop equations ARE the ==holonomic constraints== of the mechanism**
+
+​	$g(\theta) = \begin{bmatrix} g_1(\theta_1, \ldots, \theta_n) \\ \vdots \\ g_k(\theta_1, \ldots, \theta_n) \end{bmatrix} = 0,\ k \le n ,\ g(\theta) \in \mathbb{R}^n $ 
+
+​	$n$ = total variables (dimension of the joint space)
+
+​	$k$ = number of holonomic constraints
+
+- The close-loop equations/holonomic constraints properties:
+
+  - A set of $k$ independent queations, with $k \le$ n, meaning that **holonomic constraints reduces the joint space**
+  - They constraints on only configuration aka position 
+  - C-Space Dimension: $DOF = n - k$  aka $ \text{DOF} = n - (\text{number of independent Holonomic Constraints}) $ 
+
+  
+
+#### Pfaffian Constraints
+
+- We knew that the loop must stay closed so $g(\theta) = 0$ 
+
+- The total derivative with respect to time $t$ is the sum of the partial derivatives for every angle
+
+  $ \frac{d}{dt} g(\theta(t)) = \frac{\partial g}{\partial \theta_1} \frac{d\theta_1}{dt} + \frac{\partial g}{\partial \theta_2} \frac{d\theta_2}{dt} + \dots + \frac{\partial g}{\partial \theta_n} \frac{d\theta_n}{dt} = 0$ 
+
+- As we knew that $\dot{\theta} = \frac{d\theta}{dt}$ :
+
+​	$\frac{\partial g}{\partial \theta_1} \dot{\theta}_1 + \dots + \frac{\partial g}{\partial \theta_n} \dot{\theta}_n = 0 $ 
+
+> Note of the $\dot{\theta}$ notation
+>
+> - $\theta$  = **Position** (Angle)
+> - $\dot{\theta} = \frac{d\theta}{dt}$ = **velocity** (angular velocity)
+> - $\ddot{\theta} = \frac{d^2\theta}{dt^2}$ = **acceleration** (angular acceleration)
+
+- Further noted in matrix form:
+
+​	$ \underbrace{\begin{bmatrix} \frac{\partial g_1}{\partial \theta_1} & \dots & \frac{\partial g_1}{\partial \theta_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial g_k}{\partial \theta_1} & \dots & \frac{\partial g_k}{\partial \theta_n} \end{bmatrix}}_{\text{The Jacobian Matrix } A(\theta)} \cdot \underbrace{\begin{bmatrix} \dot{\theta}_1 \\ \vdots \\ \dot{\theta}_n \end{bmatrix}}_{\text{Velocity Vector } \dot{\theta}} = \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix} $ 
+
+- **The generic Pfaffian form**: ==$A(\theta)\dot{\theta} = 0$== 
+  - $\dot{\theta}$ is the movement
+  - The dot product being 0 means the motion must be perpendicular to the constraint forces
+- **Integrable Pfaffian constraints are holonomic constraints**
+- **Non-integrable Pfaffian constraints are nonholonomic constraints**
+
+
+
+#### Nonholonomic Constraints
+
+- the non-integrable Pfaffian constraints
+
+![pfaffian](assets/pfaffian.jpg)
+
+#### Integrability test
+
+Example: 
+
+- We have a differential constraint: $(1+cosq_1)\dot{q_1}+(2+sinq_2)\dot{q_2}+(cosq_1+sinq_2+3)\dot{q_3} = 0$
+
+- General Pfaffian form: $A_1(q) \dot{q}_1 + A_2(q) \dot{q}_2 + A_3(q) \dot{q}_3 = 0$ 
+
+- The coefficients are: 
+  - $A_1 = 1 + \cos q_1$ 
+  - $A_2 = 2 + \sin q_2$ 
+  - $A_3 = \cos q_1 + \sin q_2 + 3$ 
+
+
+
+### 2.5 Task Space and Workspace
+
+- Task space: the space in which the robot’s task is naturally expressed. 
+  - The task space depends on the task, not the robot.
+- Wrokspace: a specification of the reachable configurations of the end effector. 
+  - The workspace of a particular robot is independent of the task.
