@@ -11,12 +11,21 @@ I manage and sync my learning notes (markdown files) here.
 ### 2025
 
 - [Robotics] Modern Robotics
-- [Coding] Python for Everyone Coursera
+    - In progress. 
+    - Self-guided Robotics fundamental. 
+- [Coding] Python for Everyone
+    - Completed. 
+    - Refresher for my Python knowledge. 
 
 ### 2024
 
-- [German] GRMN2001 Intermediate German class notes
+- [Language] GRMN2001 Intermediate German 
+    - Completed. 
+    - Class notes at Gatech. 
 
 ### 2022
 
-- [Reading] Symbol of Eternity: The Art of Landscape Painting in China
+- [Art] Symbol of Eternity: The Art of Landscape Painting in China
+    - Completed. 
+    - In Mandarin Chinese. 
+    - Self-study notes. 
