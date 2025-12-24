@@ -4,8 +4,6 @@ Kevin Lynch’s book **Modern Robotics: Mechanics, Planning and Control**
 
 Note created on: 12/13/2025
 
-Last edit: 12/13/2025
-
 
 
 ## Chapter 2: C-Space
@@ -318,7 +316,7 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 
 Example: 
 
-- We have a differential constraint: $(1+cosq_1)\dot{q_1}+(2+sinq_2)\dot{q_2}+(cosq_1+sinq_2+3)\dot{q_3} = 0$
+- We have a differential constraint: $(1+cosq_1)\dot{q_1}+(2+sinq_2)\dot{q_2}+(cosq_1+sinq_2+3)\dot{q_3} = 0$ 
 
 - General Pfaffian form: $A_1(q) \dot{q}_1 + A_2(q) \dot{q}_2 + A_3(q) \dot{q}_3 = 0$ 
 

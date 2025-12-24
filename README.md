@@ -10,22 +10,22 @@ I manage and sync my learning notes (markdown files) here.
 
 ### 2025
 
-- [Robotics] Modern Robotics
+- [[Robotics] Modern Robotics](./modern-robotics)
     - ➡️ In progress 
-    - 🤖 Self-guided Robotics fundamental
-- [Coding] Python for Everyone
+    - 🤖 Self-guided Robotics fundamentals
+- [[Coding] Python for Everyone](./py4e-coursera)
     - ✅ Completed
     - 👾 Refresher for my Python knowledge
 
 ### 2024
 
-- [Language] GRMN2001 Intermediate German 
+- [[Language] GRMN2001 Intermediate German](./german)
     - ✅ Completed
     - 🐝 Class notes at Gatech
 
 ### 2022
 
-- [Art] Symbol of Eternity: The Art of Landscape Painting in China
+- [[Art] Symbol of Eternity: The Art of Landscape Painting in China](./symbol-of-eternity)
     - ⏭️ Paused
-    - Note taken in Mandarin Chinese
+    - Notes taken in Mandarin Chinese
     - Self-study notes
