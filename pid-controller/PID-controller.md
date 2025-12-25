@@ -10,17 +10,16 @@ Notes created on 12/25/2025
 - Output signal = $y(t)$ 
 - K = gain
 
-- Goal: ==$y(t)$ matches $r(t)$== 
+- Goal: ==$ y(t) $ matches $r(t)$== 
 
 
 
 Control Law: 
 
-$u(t) = K_p \cdot e(t) + K_i \cdot \frac{1}{s} \text{(Integrator)} \cdot e(t) + K_d \cdot s \text{(differetiator)} \cdot e(t)$ 
+$u(t) = K_p \cdot e(t) + K_i \cdot \frac{1}{s} \text{(Integrator)} \cdot e(t) + K_d \cdot s \text{(differentiator)} \cdot e(t)$ 
 
 $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t} e(\tau)d\tau}_{u_i(t)} + \underbrace{K_d \cdot \frac{de(t)}{dt}}_{u_d(t)}$ 
 
- 
 
 ## Proportional Control
 
