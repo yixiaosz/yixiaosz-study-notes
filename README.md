@@ -13,6 +13,9 @@ I manage and sync my learning notes (markdown files) here.
 - [[Robotics] Modern Robotics](./modern-robotics)
     - ➡️ In progress 
     - 🤖 Self-guided Robotics fundamentals
+- [[Robotics] PID Controller](./pid-controller)
+    - ➡️ In progress 
+    - 🕹️ Basics of PID control theory
 - [[Coding] Python for Everyone](./py4e-coursera)
     - ✅ Completed
     - 👾 Refresher for my Python knowledge
