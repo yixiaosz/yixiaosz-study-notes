@@ -14,16 +14,52 @@ Notes created on 12/25/2025
 
 
 
-Control Law: 
+### Control Law
 
 $u(t) = K_p \cdot e(t) + K_i \cdot \frac{1}{s} \text{(Integrator)} \cdot e(t) + K_d \cdot s \text{(differentiator)} \cdot e(t)$ 
 
 $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t} e(\tau)d\tau}_{u_i(t)} + \underbrace{K_d \cdot \frac{de(t)}{dt}}_{u_d(t)}$ 
 
 
-## Proportional Control
+
+### Proportional Control
+
+![P-controller-diagram](assets/proportional.jpg)
+
+- The larger the error, the stronger the control signal $U_p(t)$
+- Leaves a steady-state error (稳态误差) against the reference signal. 
+  - most systems leaves a non-zero s.s. error with only the P controller
+
+- Think of the P Controller as a **rubber band** connecting a weight’s actual position and the target position. 
+
+  - The stiffness of the rubber band is the Proportional Gain $K_p$. 
+
+  - The rubber band oscillates up and down until it settles at a point where the rubber band is stretched *just enough* to counteract gravity. That stretch is the steady-state error. 
+
+  - Ideally, the larger $K_p$, the smaller the steady-state error: $e_{ss} \approx \frac{1}{1 + K_p}$. 
+
+  - However, high gain causes violent oscillation and the system will be unstable. 
 
 
+
+### Integral Control
+
+![I-controller-diagram](assets/integral.jpg)
+
+- The main controlling force
+- **Eliminates the steady-state error**
+  - If a non-zero s.s. error exists, the control signal $u_i(t)$ will increase towards infinity! 
+- **Oscillates** the error signal above and below zero until it reaches the zero s.s. error. 
+
+
+
+### Derivative Control
+
+![derivative](assets/derivative.jpg)
+
+- The **damper of the system**, reducing oscillations. 
+- The more dynamic the error signal $e(t)$ is, the larger its rate of change $\frac{de(t)}{dt}$ is, so the stronger the D control signal $K_d \cdot \frac{de(t)}{dt}$ is. 
+- When the error reaches steady-state (flat), no matter zero or non-zero, the D control signal becomes zero too. 
 
 
 
