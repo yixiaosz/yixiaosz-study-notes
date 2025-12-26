@@ -12,11 +12,11 @@ Notes created on 12/25/2025
 - Output signal $y(t)$ 
 - Controller gain $K_p,K_i,K_d$ 
 
-- Goal: $e(t) \rarr 0$, $y(t)$ matches $r(t)$
+- Goal: $e(t) = 0$, $y(t)$ matches $r(t)$
 
 
 
-### Control Law
+## PID Control Law
 
 $u(t) = K_p \cdot e(t) + K_i \cdot \frac{1}{s} \text{(Integrator)} \cdot e(t) + K_d \cdot s \text{(differentiator)} \cdot e(t)$ 
 
@@ -67,7 +67,7 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 
 ## Practical Implementations
 
-### 1. Amplified noise in pure derivative $s$
+### 1. Amplified noise in pure derivatives
 
 - ⚠️ With just **a standalone pure derivative** $[s]$ , **any noise will be amplified and it corrupts the output signal**. 
   - D controller output $u_d(t) = K_d \cdot s \cdot e(t) \text{(Laplace domain)} = K_d \cdot \frac{de(t)}{dt} \text{(pure derivative form)}$ 
@@ -88,6 +88,11 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 
     ![pseudo-vs-true-signal](assets/pseudo-vs-true-signal.jpg)
 
+
+
+
+#### Daisy-chaining low-pass filters
+
 - Daisy chaining several low-pass filters: $u_d(t) = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot \frac{s}{s+a} \cdot \frac{s}{s+a}... = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot (\frac{s}{s+a})^n$ can further clean-up the noise. 
 
   - ⚠️ Adding low-pass filters introduce **phase lags**, especially when there’re multiple low-pass filters and the frequency is high (e.g. $\omega = 50$). 
@@ -104,7 +109,7 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 - Recalling from section [Integral Control](# 2. Integral Control (I)), an integrator always **overshoots the system** $y(t)$ after reaching the set point $r(t)$ and drives the systems beyond $r(t)$. The system $y(t)$ will **oscillate** back and forth of $r(t)$ until it eventually matches $r(t)$. 
 - The integrator is **an accumulator, the net sum of the entire history of the movement**. 
   - At the steady-state, the difference in positive error & negative error is exactly what’s needed to hold the system at the set point. 
-  - In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.== ([See example](# Integrator non-zero s.s. example))
+  - In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.== ([See example](#Integrator non-zero s.s. example))
   -  when $e(t) = 0$: 
     - P controller’s $u_p(t) = 0$, 
     - Derivative controller’s $u_d(t) = 0$, 
@@ -113,10 +118,10 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 
 - ⚠️ We need to **be aware of and control** an integrator’s winding up. If integrator amount goes very high, it would overshoot drastically! 
 - ✅ **Anti-wind-up solutions**:
-  	1. **Gradually increase the set point**: less oscillation but longer settlement time. ([See details](# Solution 1: Gradually increase the set point))
-  	1. **Disable integrator until system nears set point**: system becomes non-linear, adding complexity. ([See details](# Solution 2: Disable integrator until system nears set point)) 
-  	1. **Limit time period over which integral is calculated**: . ([See details](# Solution 3: Limit time period over which integral is calculated))
-  	1. ⭐️ **Limit the max/min state of the integrator**: Limits the amount of errors the integrator is allowed to accumulate. ([See details](# Solution 4: Limit the max/min state of the integrator))
+  	1. **Gradually increase the set point**: less oscillation but longer settlement time. ([See details](#Solution 1: Gradually increase the set point))
+  	1. **Disable integrator until system nears set point**: system becomes non-linear, adding complexity. ([See details](#Solution 2: Disable integrator until system nears set point)) 
+  	1. **Limit time period over which integral is calculated**: . ([See details](#Solution 3: Limit time period over which integral is calculated))
+  	1. ⭐️ **Limit the max/min state of the integrator**: Limits the amount of errors the integrator is allowed to accumulate. ([See details](#Solution 4: Limit the max/min state of the integrator))
 
 
 
