@@ -1,6 +1,8 @@
 # PID Controller
 
-Notes created on 12/25/2025
+Notes created on 12/25/2025 using Typora
+
+
 
 ![PID-controller-diagram](assets/960px-PID_en.jpg)
 
@@ -106,10 +108,10 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 
 ### 2. Integrator anti-wind-up
 
-- Recalling from section [Integral Control](# 2. Integral Control (I)), an integrator always **overshoots the system** $y(t)$ after reaching the set point $r(t)$ and drives the systems beyond $r(t)$. The system $y(t)$ will **oscillate** back and forth of $r(t)$ until it eventually matches $r(t)$. 
+- Recalling from section [Integral Control](#2-integral-control-i), an integrator always **overshoots the system** $y(t)$ after reaching the set point $r(t)$ and drives the systems beyond $r(t)$. The system $y(t)$ will **oscillate** back and forth of $r(t)$ until it eventually matches $r(t)$. 
 - The integrator is **an accumulator, the net sum of the entire history of the movement**. 
   - At the steady-state, the difference in positive error & negative error is exactly what’s needed to hold the system at the set point. 
-  - In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.== ([See example](#Integrator non-zero s.s. example))
+  - In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.== ([See example](#integrator-non-zero-ss-example))
   -  when $e(t) = 0$: 
     - P controller’s $u_p(t) = 0$, 
     - Derivative controller’s $u_d(t) = 0$, 
@@ -118,10 +120,10 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 
 - ⚠️ We need to **be aware of and control** an integrator’s winding up. If integrator amount goes very high, it would overshoot drastically! 
 - ✅ **Anti-wind-up solutions**:
-  	1. **Gradually increase the set point**: less oscillation but longer settlement time. ([See details](#Solution 1: Gradually increase the set point))
-  	1. **Disable integrator until system nears set point**: system becomes non-linear, adding complexity. ([See details](#Solution 2: Disable integrator until system nears set point)) 
-  	1. **Limit time period over which integral is calculated**: . ([See details](#Solution 3: Limit time period over which integral is calculated))
-  	1. ⭐️ **Limit the max/min state of the integrator**: Limits the amount of errors the integrator is allowed to accumulate. ([See details](#Solution 4: Limit the max/min state of the integrator))
+  	1. **Gradually increase the set point**: less oscillation but longer settlement time. ([See details](#solution-1-gradually-increase-the-set-point))
+  	1. **Disable integrator until system nears set point**: system becomes non-linear, adding complexity. ([See details](#solution-2-disable-integrator-until-system-nears-set-point)) 
+  	1. **Limit time period over which integral is calculated**: . ([See details](#solution-3-limit-time-period-over-which-integral-is-calculated))
+  	1. ⭐️ **Limit the max/min state of the integrator**: Limits the amount of errors the integrator is allowed to accumulate. ([See details](#solution-4-limit-the-maxmin-state-of-the-integrator))
 
 
 
@@ -185,8 +187,6 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 
 ![disable-until-nearby](assets/disable-until-nearby.jpg)
 
-
-
 #### Solution 3: Limit time period over which integral is calculated
 
 - Original $u_i(t) = K_i \cdot \int_{0}^{t} e(\tau)d\tau$ 
@@ -233,12 +233,9 @@ $u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t
 ## Reference
 
 - [Introduction to PID Control by Christopher Lum - Youtube](https://www.youtube.com/watch?v=_VzHpLjKeZ8)
-
 - [Practical Implementation Issues with a PID Controller by Christopher Lum - Youtube](https://youtu.be/yr6om0e0oAQ?si=rU-oW-7QXwFinE3-)
-
 - [从本质上理解PID控制器，告别盲目调参 - Bilibili](https://www.bilibili.com/video/BV1NgnfzVERK/?share_source=copy_web&vd_source=70cc022a94cbbf6c817dca0ce94573e0)
 - [Proportional–integral–derivative controller - Wikipedia](https://en.wikipedia.org/wiki/Proportional–integral–derivative_controller)
-- 
 
 
 
