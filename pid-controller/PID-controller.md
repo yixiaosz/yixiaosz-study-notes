@@ -99,51 +99,127 @@ $ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 
 
 
-### 2. Integrator wind-up
+### 2. Integrator anti-wind-up
 
-- Recalling from section [Integral Control](# 2. Integral Control (I)), a pure integrator always **overshoots the system** $y(t)$ after reaching the set point $ r(t)$ and drives the systems beyond $ r(t)$. The system $y(t)$ will **oscillate** back and forth of $ r(t)$ until it eventually matches $ r(t)$. 
-- At the steady-state, the difference in positive error & negative error is exactly what’s needed to hold the system at the set point. 
-  - In another word: In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.==
-  - when $e(t) = 0$: 
+- Recalling from section [Integral Control](# 2. Integral Control (I)), an integrator always **overshoots the system** $y(t)$ after reaching the set point $ r(t)$ and drives the systems beyond $ r(t)$. The system $y(t)$ will **oscillate** back and forth of $ r(t)$ until it eventually matches $ r(t)$. 
+- The integrator is **an accumulator, the net sum of the entire history of the movement**. 
+  - At the steady-state, the difference in positive error & negative error is exactly what’s needed to hold the system at the set point. 
+  - In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.== ([See example](# Integrator non-zero s.s. example))
+  -  when $e(t) = 0$: 
     - P controller’s $u_p(t) = 0$, 
     - Derivative controller’s $u_d(t) = 0$, 
     - **$u_i(t)$ is the only controlling factor remains**. 
-  - External load examples gravity, heat loss, air friction etc. 
+  - External load examples: gravity, heat loss, air friction etc. 
 
-- Example: spring-mass damper model
+- ⚠️ We need to **be aware of and control** an integrator’s winding up. If integrator amount goes very high, it would overshoot drastically! 
+- ✅ **Anti-wind-up solutions**:
+  	1. **Gradually increase the set point**: less oscillation but longer settlement time. ([See details](# Solution 1: Gradually increase the set point))
+  	1. **Disable integrator until system nears set point**: system becomes non-linear, adding complexity. ([See details](# Solution 2: Disable integrator until system nears set point)) 
+  	1. **Limit time period over which integral is calculated**: . ([See details](# Solution 3: Limit time period over which integral is calculated))
+  	1. ⭐️ **Limit the max/min state of the integrator**: Limits the amount of errors the integrator is allowed to accumulate. ([See details](# Solution 4: Limit the max/min state of the integrator))
 
-  -  Goal: to move the block from [0,0] to [1,0], aka to move it 1 meter to the right. 
 
-  - ```matlab
-    clear
-    clc
-    close all
-    
-    m = 2; %block mass
-    k = 0.1; %spring constant
-    c = 0.05; %damping ratio
-    
-    A = [0 1;-k/m -c/m];
-    B = [0;1/m];
-    C = [1 0];
-    D = [0];
-    
-    x0 = [0;0]; %block starting pisition velocity
-    
-    KP = 1.2;
-    KI = 0.15;
-    KD = 0.6;
-    
-    deltaTMax = 0.05;
-    ```
 
-  - ![spring-mass-damper-model](assets/spring-mass-damper-model.jpg)
+#### Integrator non-zero s.s. example
+
+- Spring-mass damper model
+
+-  Goal: to move the block from [0,0] to [1,0], aka to move it 1 meter to the right. 
+
+- ```matlab
+  clear
+  clc
+  close all
+  
+  m = 2; %block mass
+  k = 0.1; %spring constant
+  c = 0.05; %damping ratio
+  
+  A = [0 1;-k/m -c/m];
+  B = [0;1/m];
+  C = [1 0];
+  D = [0];
+  
+  x0 = [0;0]; %block starting pisition velocity
+  
+  KP = 1.2;
+  KI = 0.15;
+  KD = 0.6;
+  
+  deltaTMax = 0.05;
+  ```
+
+- ![spring-mass-damper-model](assets/spring-mass-damper-model.jpg)
 
 ![non-zero-integrator-ss](assets/non-zero-integrator-ss.jpg) 
 
 - ==As long as the integral gain $K_i$ is non-zero==, $u_i$ will eventually drive the system to the zero s.s. 
 
 
+
+#### Solution 1: Gradually increase the set point
+
+- Add a **prefilter** $P(s)$ that damps a step change in $ r(t)$ into a gradual change. 
+- The prefilter $P(s)$ must have:
+  1. net DC gain = 1, so it outputs the same $ r(t)$ that was specified.
+  2. a bandwidth that **doesn’t handicap** the entire closed loop system. 
+     - **The trade-off**: A super slow prefilter can almost eliminate the integrator’s oscillation, but the system would take a looong time to settle (which obviously handicaps the entire system). 
+- Example prefilter: a low-pass filter with DC gain a=1, $\frac{1}{s+1}$. 
+
+![anti-wind-up-1](assets/anti-wind-up-1.jpg)
+
+![prefilter-effect](assets/prefilter-effect.jpg)
+
+
+
+#### Solution 2: Disable integrator until system nears set point
+
+- When there’re multiple conditions the automatic system needs to switch in between, disable the integrator during the transient period. 
+  - When out of the ON range, the system acts as a PD controller. 
+- However, this solution **turns the system into non-linear, hybrid switch system**. 
+
+![disable-until-nearby](assets/disable-until-nearby.jpg)
+
+
+
+#### Solution 3: Limit time period over which integral is calculated
+
+- Original $u_i(t) = K_i \cdot \int_{0}^{t} e(\tau)d\tau$ 
+- Limited time period: $\tilde{u_i}(t) = K_i \cdot \int_{t-w}^{t} e(\tau)d\tau$ 
+  - $w$ is a set amount of time. 
+- This solution limits the amount of error the integrator can accumulate. 
+- However, this solution weakens the integral control. 
+
+
+
+#### Solution 4: Limit the max/min state of the integrator
+
+- ⭐️ **The most effective solution**
+- Drawback: System becomes **non-linear**. 
+- In MatLab, Integrators can be configured with **upper and lower saturation limits**. 
+- Note 1: $\frac{1}{s}$ with **internal** saturation limits $\neq$ $\frac{1}{s}$ + saturation limits
+  - With internal limits, $u_i$ pauses accumulation when over the limits
+  - With external limits, $u_i$ never pauses. 
+- Note 2: $K_i \cdot \frac{1}{s}\text{(limited)} \neq \frac{1}{s}\text{(limited)}\cdot K_i$
+  -  The original $\frac{1}{s}$ doesn’t matter. 
+  - $K_i \cdot \frac{1}{s}\text{(limited)}$ implies that: internal saturation limits of the integrator = the limits of the integral controller ouput. 
+
+![internal-vs-external-saturation-limits](assets/internal-vs-external-saturation-limits.jpg)
+
+
+
+
+
+## List of Linear Analysis
+
+- Pseudo derivative
+- Prefilter (Integrator anti-wind-up solution 1)
+
+
+
+## List of Non-Linear Analysis
+
+- Integrator anti-wind-up solution 2, 3, 4
 
 
 
