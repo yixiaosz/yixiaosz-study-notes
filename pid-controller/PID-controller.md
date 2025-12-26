@@ -9,10 +9,10 @@ Notes created on 12/25/2025
 - Input reference signal $r(t)$ 
 - Error signal $e(t) = r(t) - y(t)$ 
 - Control signal $u(t)$ 
-- Output signal $ y(t) $ 
+- Output signal $y(t)$ 
 - Controller gain $K_p,K_i,K_d$ 
 
-- Goal: $e(t) \rarr 0$, $ y(t) $ matches $r(t)$
+- Goal: $e(t) \rarr 0$, $y(t)$ matches $r(t)$
 
 
 
@@ -20,7 +20,7 @@ Notes created on 12/25/2025
 
 $u(t) = K_p \cdot e(t) + K_i \cdot \frac{1}{s} \text{(Integrator)} \cdot e(t) + K_d \cdot s \text{(differentiator)} \cdot e(t)$ 
 
-$ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t} e(\tau)d\tau}_{u_i(t)} + \underbrace{K_d \cdot \frac{de(t)}{dt}}_{u_d(t)} $ 
+$u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{t} e(\tau)d\tau}_{u_i(t)} + \underbrace{K_d \cdot \frac{de(t)}{dt}}_{u_d(t)}$ 
 
 
 
@@ -79,8 +79,8 @@ $ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 - Best robust practice: adding built-in **low-pass filters** $\frac{a}{s+a}$. 
 
   - $a$ is the cutoff frequency, $s$ is the pure derivative. 
-  - At low frequency (mostly the derivative we want): $s \approx 0$, so $ \frac{a}{0 + a} = \frac{a}{a} = 1 $. 
-  - At high frequency (mostly the noise): $s \approx 1$, so $ \frac{a}{\infty + a} \approx \frac{a}{\infty} \approx 0 $. 
+  - At low frequency (mostly the derivative we want): $s \approx 0$, so $\frac{a}{0 + a} = \frac{a}{a} = 1$. 
+  - At high frequency (mostly the noise): $s \approx 1$, so $\frac{a}{\infty + a} \approx \frac{a}{\infty} \approx 0$. 
 
 - $u_d(t) = K_d \cdot s \cdot e(t) \cdot \frac{a}{s+a} = K_d \cdot e(t) \cdot \frac{as}{s+a}$. 
 
@@ -95,13 +95,13 @@ $ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
     ![lagged-low-pass-filter](assets/lagged-low-pass-filter.jpg)
 
 - Using pseudo derivative $\frac{as}{s+a}$ also can avoid infinite $U_d(t)$ output when there’s a **step change** in the reference signal $r(t)$. 
-  - Example: a user adjusts the oven temperature from 120ºC to 140ºC. ⚠️ Pure derivative $s = \infin$, but $\frac{as}{s+a}$ won’t. 
+  - Example: a user adjusts the oven temperature from 120ºC to 140ºC. ⚠️ Pure derivative $s = \infty$, but $\frac{as}{s+a}$ won’t. 
 
 
 
 ### 2. Integrator anti-wind-up
 
-- Recalling from section [Integral Control](# 2. Integral Control (I)), an integrator always **overshoots the system** $y(t)$ after reaching the set point $ r(t)$ and drives the systems beyond $ r(t)$. The system $y(t)$ will **oscillate** back and forth of $ r(t)$ until it eventually matches $ r(t)$. 
+- Recalling from section [Integral Control](# 2. Integral Control (I)), an integrator always **overshoots the system** $y(t)$ after reaching the set point $r(t)$ and drives the systems beyond $r(t)$. The system $y(t)$ will **oscillate** back and forth of $r(t)$ until it eventually matches $r(t)$. 
 - The integrator is **an accumulator, the net sum of the entire history of the movement**. 
   - At the steady-state, the difference in positive error & negative error is exactly what’s needed to hold the system at the set point. 
   - In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.== ([See example](# Integrator non-zero s.s. example))
@@ -159,9 +159,9 @@ $ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 
 #### Solution 1: Gradually increase the set point
 
-- Add a **prefilter** $P(s)$ that damps a step change in $ r(t)$ into a gradual change. 
+- Add a **prefilter** $P(s)$ that damps a step change in $r(t)$ into a gradual change. 
 - The prefilter $P(s)$ must have:
-  1. net DC gain = 1, so it outputs the same $ r(t)$ that was specified.
+  1. net DC gain = 1, so it outputs the same $r(t)$ that was specified.
   2. a bandwidth that **doesn’t handicap** the entire closed loop system. 
      - **The trade-off**: A super slow prefilter can almost eliminate the integrator’s oscillation, but the system would take a looong time to settle (which obviously handicaps the entire system). 
 - Example prefilter: a low-pass filter with DC gain a=1, $\frac{1}{s+1}$. 
