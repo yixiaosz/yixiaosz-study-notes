@@ -4,13 +4,15 @@ Notes created on 12/25/2025
 
 ![PID-controller-diagram](assets/960px-PID_en.jpg)
 
-- Input reference signal = $r(t)$ 
-- Error signal = $e(t)$ 
-- Control signal = $u(t)$ 
-- Output signal = $y(t)$ 
-- K = gain
+> A block diagram of a PID controller in a **feedback loop**. (source: Wikipedia)
 
-- Goal: ==$ y(t) $ matches $r(t)$== 
+- Input reference signal $r(t)$ 
+- Error signal $e(t) = r(t) - y(t)$ 
+- Control signal $u(t)$ 
+- Output signal $ y(t) $ 
+- Controller gain $K_p,K_i,K_d$ 
+
+- Goal: $e(t) \rarr 0$, $ y(t) $ matches $r(t)$
 
 
 
@@ -65,14 +67,39 @@ $ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 
 ## Practical Implementations
 
-### 1. Noise in the D Controller
+### 1. Amplified noise in pure derivative $s$
 
-- Although clean error signal works fine, **any noise will be amplified** in the D controller
+- ⚠️ With just **a standalone pure derivative** $[s]$ , **any noise will be amplified and it corrupts the output signal**. 
   - D controller output $u_d(t) = K_d \cdot s \cdot e(t) \text{(Laplace domain)} = K_d \cdot \frac{de(t)}{dt} \text{(pure derivative form)}$ 
-  - Predictive, **non-causal derivative**:  $\dot{e}(k) = \frac{e(k+1) - e(k)}{T}$, $T$ is the small time step. However, $e(k+1)$ is in the future, we don’t know. 
-  - Approximate, **causal derivative**: $\dot{\tilde{e}} = \frac{e(k)-e(k-1)}{T}$. We use the known prior time fraction instead. 
-  - Real-life scenario: $\dot{\tilde{e}} = \frac{e(k)-e(k-1) + n(k)}{T} = \frac{e(k)-e(k-1)}{T}+\frac{n(k)}{T}$, $n(k)$ is the amount of random noise in the time fraction.
-- **The smaller the time fraction $T$, the more amplified the noise $\frac{n(t)}{T}$ is.** 
+  - ⛔️ Predictive (forward), **non-causal derivative**:  $\dot{e}(k) = \frac{e(k+1) - e(k)}{T}$, $T$ is the small time step. However, $e(k+1)$ is in the future, we don’t know. 
+  - ✅ Approximate (backward), **causal derivative**: $\dot{\tilde{e}}(k) = \frac{e(k)-e(k-1)}{T}$. We use the known prior time fraction instead. 
+- Real-life scenario: $\dot{\tilde{e}}(k) = \frac{e(k)-e(k-1) + n(k)}{T} = \frac{e(k)-e(k-1)}{T}+\frac{n(k)}{T}$, $n(k)$ is the amount of random noise in the time fraction.
+  - **The smaller the time fraction $T$, the more amplified the noise $\frac{n(t)}{T}$ is.** 
+
+- Best robust practice: adding built-in **low-pass filters** $\frac{a}{s+a}$. 
+
+  - $a$ is the cutoff frequency, $s$ is the pure derivative. 
+  - At low frequency (mostly the derivative we want): $s \approx 0$, so $ \frac{a}{0 + a} = \frac{a}{a} = 1 $. 
+  - At high frequency (mostly the noise): $s \approx 1$, so $ \frac{a}{\infty + a} \approx \frac{a}{\infty} \approx 0 $. 
+
+- $u_d(t) = K_d \cdot s \cdot e(t) \cdot \frac{a}{s+a} = K_d \cdot e(t) \cdot \frac{as}{s+a}$. 
+
+  - $\frac{as}{s+a}$ is a **pseudo derivative**, turning the input signal $e(t)$ into an approximate derivative $\dot{\tilde{e}}$. 
+
+    ![pseudo-vs-true-signal](assets/pseudo-vs-true-signal.jpg)
+
+- Daisy chaining several low-pass filters: $u_d(t) = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot \frac{s}{s+a} \cdot \frac{s}{s+a}... = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot (\frac{s}{s+a})^n$ can further clean-up the noise. 
+
+  - ⚠️ Adding low-pass filters introduce **phase lags**, especially when there’re multiple low-pass filters and the frequency is high (e.g. $\omega = 50$). 
+
+    ![lagged-low-pass-filter](assets/lagged-low-pass-filter.jpg)
+
+- Extra benefit of using pseudo derivative $\frac{as}{s+a}$: Avoids infinite $U_d(t)$ output when there’s a step change in the reference signal $r(t)$. 
+  - Example: a user adjusts the oven temperature from 120ºC to 140ºC. ⚠️ Pure derivative $s = \infin$. 
+
+### 2. Integrator Issues
+
+
 
 
 
