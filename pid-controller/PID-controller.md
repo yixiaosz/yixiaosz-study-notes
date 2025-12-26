@@ -51,7 +51,7 @@ $ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 - The main controlling force
 - **Eliminates the steady-state error**
   - If a non-zero s.s. error exists, the control signal $u_i(t)$ will increase towards infinity! 
-- **Oscillates** the error signal above and below zero until it reaches the zero s.s. error. 
+- However, it overshoots! The error signal will **oscillate** above and below zero until it reaches the zero s.s. error. 
 
 
 
@@ -94,10 +94,56 @@ $ u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 
     ![lagged-low-pass-filter](assets/lagged-low-pass-filter.jpg)
 
-- Extra benefit of using pseudo derivative $\frac{as}{s+a}$: Avoids infinite $U_d(t)$ output when there’s a step change in the reference signal $r(t)$. 
-  - Example: a user adjusts the oven temperature from 120ºC to 140ºC. ⚠️ Pure derivative $s = \infin$. 
+- Using pseudo derivative $\frac{as}{s+a}$ also can avoid infinite $U_d(t)$ output when there’s a **step change** in the reference signal $r(t)$. 
+  - Example: a user adjusts the oven temperature from 120ºC to 140ºC. ⚠️ Pure derivative $s = \infin$, but $\frac{as}{s+a}$ won’t. 
 
-### 2. Integrator Issues
+
+
+### 2. Integrator wind-up
+
+- Recalling from section [Integral Control](# 2. Integral Control (I)), a pure integrator always **overshoots the system** $y(t)$ after reaching the set point $ r(t)$ and drives the systems beyond $ r(t)$. The system $y(t)$ will **oscillate** back and forth of $ r(t)$ until it eventually matches $ r(t)$. 
+- At the steady-state, the difference in positive error & negative error is exactly what’s needed to hold the system at the set point. 
+  - In another word: In systems that have external load, ==$u_i(t)$ will stay at a non-zero steady-state to balance the external load.==
+  - when $e(t) = 0$: 
+    - P controller’s $u_p(t) = 0$, 
+    - Derivative controller’s $u_d(t) = 0$, 
+    - **$u_i(t)$ is the only controlling factor remains**. 
+  - External load examples gravity, heat loss, air friction etc. 
+
+- Example: spring-mass damper model
+
+  -  Goal: to move the block from [0,0] to [1,0], aka to move it 1 meter to the right. 
+
+  - ```matlab
+    clear
+    clc
+    close all
+    
+    m = 2; %block mass
+    k = 0.1; %spring constant
+    c = 0.05; %damping ratio
+    
+    A = [0 1;-k/m -c/m];
+    B = [0;1/m];
+    C = [1 0];
+    D = [0];
+    
+    x0 = [0;0]; %block starting pisition velocity
+    
+    KP = 1.2;
+    KI = 0.15;
+    KD = 0.6;
+    
+    deltaTMax = 0.05;
+    ```
+
+  - ![spring-mass-damper-model](assets/spring-mass-damper-model.jpg)
+
+![non-zero-integrator-ss](assets/non-zero-integrator-ss.jpg) 
+
+- ==As long as the integral gain $K_i$ is non-zero==, $u_i$ will eventually drive the system to the zero s.s. 
+
+
 
 
 
