@@ -10,6 +10,7 @@ I manage and sync my learning notes (markdown files) here.
 
 ### 2025
 
+
 - [[Robotics] Modern Robotics](./modern-robotics)
     - ➡️ In progress 
     - 🤖 Self-guided Robotics fundamentals
@@ -19,6 +20,9 @@ I manage and sync my learning notes (markdown files) here.
 - [[Coding] Python for Everyone](./py4e-coursera)
     - ✅ Completed
     - 👾 Refresher for my Python knowledge
+- [[Tools] Tavily Web Search](./tools/tavily)
+    - ✅ Completed
+    - 🔍 Quick reference for Tavily API usage
 
 ### 2024
 
