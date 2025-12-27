@@ -95,7 +95,7 @@ $$u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 
 #### Daisy-chaining low-pass filters
 
-- Daisy chaining several low-pass filters: $u_d(t) = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot \frac{s}{s+a} \cdot \frac{s}{s+a}... = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot (\frac{s}{s+a})^n$ can further clean-up the noise. 
+- Daisy chaining several low-pass filters: $u_d(t) = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot \frac{a}{s+a} \cdot \frac{a}{s+a}... = K_d \cdot e(t) \cdot \frac{as}{s+a} \cdot (\frac{a}{s+a})^n$ can further clean-up the noise. 
 
   - ⚠️ Adding low-pass filters introduce **phase lags**, especially when there’re multiple low-pass filters and the frequency is high (e.g. $\omega = 50$). 
 
@@ -147,7 +147,7 @@ $$u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
   C = [1 0];
   D = [0];
   
-  x0 = [0;0]; %block starting pisition velocity
+  x0 = [0;0]; %block starting position velocity
   
   KP = 1.2;
   KI = 0.15;
@@ -207,9 +207,11 @@ $$u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
   - With external limits, $u_i$ never pauses. 
 - Note 2: $K_i \cdot \frac{1}{s}\text{(limited)} \neq \frac{1}{s}\text{(limited)}\cdot K_i$
   -  The original $\frac{1}{s}$ doesn’t matter. 
-  - $K_i \cdot \frac{1}{s}\text{(limited)}$ implies that: internal saturation limits of the integrator = the limits of the integral controller ouput. 
+  - $K_i \cdot \frac{1}{s}\text{(limited)}$ implies that: internal saturation limits of the integrator = the limits of the integral controller output. 
 
 ![internal-vs-external-saturation-limits](assets/internal-vs-external-saturation-limits.jpg)
+
+
 
 
 
@@ -218,6 +220,7 @@ $$u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 ## List of Linear Analysis
 
 - Pseudo derivative
+
 - Prefilter (Integrator anti-wind-up solution 1)
 
 
@@ -225,8 +228,6 @@ $$u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 ## List of Non-Linear Analysis
 
 - Integrator anti-wind-up solution 2, 3, 4
-
-
 
 
 
