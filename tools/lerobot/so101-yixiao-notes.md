@@ -29,6 +29,12 @@ bash Miniforge3-$(uname)-$(uname -m).sh
 
 - After installation, restart the terminal and it should show: `(base) yixiaozhang@YixiaoMBP lerobot %`
 
+Once installed, the `base` environment will be activated automatically every time a terminal is opened. I turned off this auto activation by running: 
+
+```shell
+conda config --set auto_activate_base false
+```
+
 
 
 ### 2. Setup Lerobot Virtual Environment
