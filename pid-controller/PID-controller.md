@@ -231,12 +231,63 @@ $$u(t) = \underbrace{K_p \cdot e(t)}_{u_p(t)} + \underbrace{K_i \cdot \int_{0}^{
 
 
 
+## Side Notes
+
+### Laplace Transform
+
+- A function that turns a function in the **time $t$ domain** to a functions in the **Laplace $s$ domain**. 
+
+- **General form**: $F(s) = L[f(t)]$ 
+  - Detailed: $F(s) = \int^{\infty}_{0} {f(t) \cdot e^{-st}\,dt}$ 
+  - $f(t)$ is a function in the time domain such that $f(t) = 0$ for $t < 0$. 
+  - $F[\ ]$ is the Laplace operator.
+- Laplace transform **exists if**:
+  - $f(t)$ is piecewise continuous in every interval in the range $t > 0$. 
+  - $f(t)$ is [of exponential order](#exponential-order). 
+
+- Laplace method process:
+
+  1. Start w/ ODE $\dot{x}(t) = f(x,u,t)$.  
+
+  2. Input, $u(t)$, is given. 
+
+  2. Apply **Laplace Transform** to the system. 
+
+  2. Use simple algebra to find $X(s)$. 
+
+  2. Apply the **inverse Laplace Transform** to obtain $X(s) = F(X,U)$. 
+
+- See more calc examples in Prof. Lum’s [video](https://youtu.be/q0nX8uIFZ_k?si=eZ0BrDjP2Y1U24GT). 
+
+
+
+### Exponential Order
+
+- **A function $f(t)$ is of exponential order** means:
+
+  $$\lim_{t\to\infty} e^{-\sigma t} \cdot |f(t)| = 0$$
+
+- Alternative **Big O notation** saying f(t) is of exponential order:
+
+  $$f(t) = O(e^{\sigma t})$$
+
+- $e^{-\sigma t}$: exponential decay, $\sigma$ can be 1 or any bigger, bigger grows faster. 
+- As time $t$ goes to infinity, the decaying exponential function $e^{- \sigma t}$ is growing so much faster than the function $f(t)$ that the entire fraction gets crushed down to zero. 
+- $f(t)$ **must eventually grow slower than the exponential function** $e^{\sigma t}$  🙄. 
+
+- Examples
+  - of exponential order: $e^{-ct}, \cos{(xt)}$ etc. 
+  - not of exponential order: $e^{t^2}$, $te^{t^2}$ etc. 
+
+
+
 ## Reference
 
 - [Introduction to PID Control by Christopher Lum - Youtube](https://www.youtube.com/watch?v=_VzHpLjKeZ8)
 - [Practical Implementation Issues with a PID Controller by Christopher Lum - Youtube](https://youtu.be/yr6om0e0oAQ?si=rU-oW-7QXwFinE3-)
 - [从本质上理解PID控制器，告别盲目调参 - Bilibili](https://www.bilibili.com/video/BV1NgnfzVERK/?share_source=copy_web&vd_source=70cc022a94cbbf6c817dca0ce94573e0)
 - [Proportional–integral–derivative controller - Wikipedia](https://en.wikipedia.org/wiki/Proportional–integral–derivative_controller)
+- [The Laplace Transform by Christopher Lum - Youtube](https://youtu.be/q0nX8uIFZ_k?si=eZ0BrDjP2Y1U24GT)
 
 
 
