@@ -20,6 +20,12 @@ I manage and sync my learning notes (markdown files) here.
 - [[Coding] Python for Everyone](./py4e-coursera)
     - ✅ Completed
     - 👾 Refresher for my Python knowledge
+- [[Coding] Java](./tools/java)
+    - ➡️ In progress
+    - ☕ Basics of Java programming
+- [[Robotics] LeRobot](./tools/lerobot)
+    - ➡️ In progress
+    - 🤖 Learning imitation learning with LeRobot SO-101
 - [[Tools] Tavily Web Search](./tools/tavily)
     - ✅ Completed
     - 🔍 Quick reference for Tavily API usage

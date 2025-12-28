@@ -63,7 +63,7 @@ conda install ffmpeg=7.1.1 -c conda-forge
 
 ```shell
 # check available conda virtural environments. 
-# should show an *active* base venv and an *inactive* lerobot venv.
+# should show an *active/inactive* base venv and an *inactive* lerobot venv.
 conda env list
 
 # switch to the lerobot venv
@@ -153,10 +153,10 @@ Learn more on [Hugging Face](https://huggingface.co/docs/lerobot/il_robots).
 ```shell
 lerobot-teleoperate \
     --robot.type=so101_follower \
-    --robot.port=/dev/tty.usbmodem58760431541 \
+    --robot.port=/dev/tty.usbmodem5B3E1200031 \
     --robot.id=my_awesome_follower_arm \
     --teleop.type=so101_leader \
-    --teleop.port=/dev/tty.usbmodem58760431551 \
+    --teleop.port=/dev/tty.usbmodem5B3E1223411 \
     --teleop.id=my_awesome_leader_arm
 ```
 
