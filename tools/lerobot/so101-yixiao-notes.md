@@ -70,7 +70,7 @@ conda env list
 conda activate lerobot
 ```
 
-- Terminal show show: `(lerobot) yixiaozhang@YixiaoMBP lerobot %`
+- Terminal should show: `(lerobot) yixiaozhang@YixiaoMBP lerobot %`
 
 
 
@@ -99,7 +99,8 @@ For more details see [Hugging Face](https://huggingface.co/docs/lerobot/so101#co
 
 ### 6. Calibration
 
-I watched [this tutorial video](https://youtu.be/Nhfda8h7e2I?si=e2UFdVL9cXzWocHZ) for robot calibration (it also taught motor configs). 
+> I watched [this tutorial video on Youtube](https://youtu.be/Nhfda8h7e2I?si=e2UFdVL9cXzWocHZ) for robot calibration (it also taught motor configs). 
+>
 
 First, you need to find the correct USB serial port that connects to the follower and leader arm. 
 
@@ -127,7 +128,7 @@ lerobot-calibrate \
     --robot.id=my_awesome_follower_arm # <- Give the robot a unique name
 ```
 
-([Video tutorial by Hugging Face](https://huggingface.co/docs/lerobot/so101#calibration-video))
+> [Video tutorial by Hugging Face](https://huggingface.co/docs/lerobot/so101#calibration-video)
 
 Note: the system will ask you to `Move my_awesome_follower-arm SO101Follower to the middle of its range of motion`. The **middle of its range of motion** means this:
 
@@ -148,7 +149,8 @@ lerobot-calibrate \
 
 ### 7. Begin Teleoperation
 
-Learn more on [Hugging Face](https://huggingface.co/docs/lerobot/il_robots). 
+> More details on [Hugging Face](https://huggingface.co/docs/lerobot/il_robots). 
+>
 
 ```shell
 lerobot-teleoperate \
@@ -160,7 +162,7 @@ lerobot-teleoperate \
     --teleop.id=my_awesome_leader_arm
 ```
 
-- My experience was that the system always asked me to recalibrate the follower arm because of error code `95 Mismatch between calibration values in the motor and the calibration file or no calibration file found`. After this extra follower arm calibration, the teleoperation should begin. 
+- My experience was that the system may ask me to recalibrate the follower arm because of error code `95 Mismatch between calibration values in the motor and the calibration file or no calibration file found`. After this extra follower arm calibration, the teleoperation should begin. 
 
 The teleoperate command will automatically:
 

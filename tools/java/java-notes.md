@@ -35,21 +35,53 @@ line 2
 */
 ```
 
-### Primitive Datatypes
+### Datatypes
 
 ```java
+// Primitive datatypes
 int age = 25; // whole numbers
 double salary = 25.42; //floating points
 boolean isEmployed = true; // stores true and false
 char grade = 'A'; // stores single characters using single quotes.
 
-// String is a non-primitive object. Objects have built-in behavior.
+// Non-primitive *objects*
 String name = "Jane";
+
+// String concatenation
+String intro = "My name is " + name +", I am " + age + " years old."
 ```
 
+### Equality operators
 
+```java
+int age1 = 25;
+int age2 = 30;
+System.out.println(age1 != age2); // primitive equality operators: == != 
+>> true
 
+String name1 = "Jane";
+String name2 = "Jack";
+System.out.println(name1.equals(name2)); // non-primitive operators: .equals()
+>> false
+```
 
+### Final keyword
+
+To declare a variable with a value that **cannot be manipulated**, we need to use the `final` keyword. 
+
+```java
+final double pi = 3.14; 
+pi += 1;
+>> error: cannot assign a value to final variable pi
+```
+
+### Custom Class and Objects
+
+A Class is a template, and objects are the instances of the class. 
+
+```java
+
+```
 
 
 
