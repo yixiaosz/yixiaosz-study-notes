@@ -22,7 +22,7 @@
 
 
 
-### Basic operations
+### Compliment & Addition
 
 - the **NOT** operation: 
 
@@ -49,7 +49,7 @@
 
 
 
-### Basic conditions
+### Permutation & Combination
 
 ```mermaid
 graph TD
@@ -57,9 +57,9 @@ graph TD
     Start["Can I repeat?"]
     Order1["Order matters?"]
     Order2["Order matters?"]
-    Result1["Use n^k"]
-    Result2["Permutation P(n, k)"]
-    Result3["Combination C(n, k)"]
+    Result1["Use n^r"]
+    Result2["Permutation P(n, r)"]
+    Result3["Combination C(n, r)"]
 
     %% Connections
     Start -- "YES" --> Order1
@@ -82,24 +82,34 @@ graph TD
     linkStyle default stroke:#64748b,stroke-width:2px,color:#475569
 ```
 
-- If **repetition allowed**: $P(E) = n^k$. 
-  - e.g. 4-digit PIN from 0~9: $ k =4, n = 10, P(E) = 10^4 = 10000$
+- If **repetition allowed**: $P(E) = n^r$. 
+  - e.g. 4-digit PIN from 0~9: $ r =4, n = 10, P(E) = 10^4 = 10000$
 
-- If **no repetition + order matters**: Permutation $P(n,k)$. 
-  - Formula: $P(n,k) = \frac{n!}{(n-k)!}$ 
-  - But, $P(n,k)$ is basically multiply down $k$ times. 
+- If **no repetition + order matters**: Permutation $P(n,r)$. 
+  - Formula: $P(n,r) = \frac{n!}{(n-r)!}$ 
+  - But, $P(n,r)$ is basically multiply down $r$ times. 
   - e.g. $P(10,4) = 10 \times 9 \times 8 \times 7 = 5040$. 
 
-- If **no repetition + order doesn’t matter**: Combination $P(n,k)$. 
-  - Formula: $C(n,k) = \frac{n!}{k!\ (n-k)!}$ 
-  - Also valid: $C(n,k) = P(n,k) \div k!$ (**Permutation divided by redundancy**)
+- If **no repetition + order doesn’t matter**: Combination $P(n,r)$. 
+  - Formula: $C(n,r) = \frac{n!}{r!\ (n-r)!}$ 
+  - Also valid: $C(n,r) = P(n,r) \div r!$ (**Permutation divided by redundancy**)
   - e.g. $C(10,4) = P(10,4) \div 4! = 5040 \div 24 = 210$. 
+
+
+
+Example 1: If I have a set of letters: AAAABBBBCC. What’s the probability that I picked 2 A from the set. 
+
+- Solution 1: the sequential way
+  - pick the letters one-by-one, so that 4/10 x 3/9 = 2/15
+- Solution 2: **the combination way** ⭐️
+  - pick two at the same time, the ratio between successful pairs and total pairs
+  - C(4,2) / C(10/2) = 2/15
 
 
 
 ### Conditional Probability
 
-- Knowing more conditions means to **shrink the probability universe** more. 
+- Knowing more conditions means to **shrink the probability universe** further. 
 - $P(A|B) = P(A \cap B)/P(B)$  
   - (“|” means “Given that”). 
   - $P(A \cap B)$ = A **AND** B = all outcomes where both A and B happen, **within** the $P(B)$ universe. 
@@ -113,6 +123,12 @@ graph TD
 ### Marginal Probability
 
 - A marginal probability is the sum of the joint probabilities. 
+
+|          | Popcorn | Candy  | Soda   | (margin) |
+| -------- | ------- | ------ | ------ | -------- |
+| Adult    | 40      | 20     | 30     | **90**   |
+| Child    | 50      | 40     | 20     | **110**  |
+| (margin) | **90**  | **60** | **50** | 200      |
 
 
 
@@ -145,7 +161,11 @@ graph TD
 - E[X], the average value in the long run. 
 - **Expected value always add**, whenever they’re dependent or not. 
   - E[X + Y] = E[X] + E[Y], for any random variables. 
-- **Linearity of Expectation**: Even though X and Y are completely dependent, when we break apart the math and regroup it, the dependencies automatically washed out. We end up with the original marginal probabilities. 
+- **Linearity of Expectation**
+  - No matter if X and Y are dependent, when we break apart the math and regroup it, the dependencies automatically washed out. We end up with the original marginal probabilities. 
+  - Example 1: Food delivery charges \$1 per mile traveled and distance varies uniformly between 1~5 miles. Let X = total charge of a random delivery. 
+    - If each delivery are independent: E[20 deliveries] = 20 x E[1 delivery] = 20 x \$1x(1+5)/2 = \$60
+    - If each delivery are dependent (like a short one will follow a long one): E[20 deliveries] still = $60. 
 
 
 
@@ -153,7 +173,7 @@ graph TD
 
 - Discrete variables
   - use **PMF - Probability Mass Function**. 
-  - Add up probabilities.
+  - Add up probabilities in each condition. 
   - P(X = x): probability equals specific value. 
   - E.g. picking marbles, rolling dices
 - Continuous variables 
@@ -173,11 +193,18 @@ $P(A) = \sum{P(A|B_i) \times P(B_i)}$ for all possible scenario $B_i$.
 
 ### Baye’s Rule
 
-$P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}$ 
+$$P(H|E) = \frac{P(H) \times P(E|H)}{P(E)} = \frac{P(H) \times P(E|H)}{P(H)P(E|H)+P(\text{not }H)P(E|\text{not }H)} = \frac{\text{Prior belief } \times \text{ Likelihood}}{\text{Evidence}}$$ 
 
-- Always account for the **base rate** - how common the condition is. 
+- **Likelihood**: the probability of seeing the **Evidence ($E$ )** assuming the **Hypothesis ($H$)** is true
+- **Prior belief**: the **base rate**, how common **the condition ($H$)** is *before* you look at any new evidence.
+- **Evidence**: the **Total Probability** of the observation ($E$) occurring universally. 
 
-Example: Bag A has 5 red, 5 blue; Bag B has 1 red, 7 blue. 70% chance pick Bag A, 30% chance pick Bag B. What’s P(Bag A|blue)
+- **Posterior**: the calculated result $P(H|E)$
+- The Baye’s Rule means to always account the **base rate**. 
+
+
+
+Example 1: Bag A has 5 red, 5 blue; Bag B has 1 red, 7 blue. 70% chance pick Bag A, 30% chance pick Bag B. What’s P(Bag A|blue)
 
 - Initial chance: **P(Bag A)** = 70%
 
@@ -194,6 +221,66 @@ Example: Bag A has 5 red, 5 blue; Bag B has 1 red, 7 blue. 70% chance pick Bag A
   = 50% x 70% / 61.25% 
 
   ~= 57.1%
+
+
+
+Example 2: A rare condition affects 0.5% of the population. A screening test has 95% sensitivity (correctly identifies those WITH condition) and 98% specificity (correctly identifies those WITHOUT condition). If someone tests positive, what’s the probability they actually have the condition? 
+
+- Solve with sample size assumption: 
+
+  - Assume there’re 10000 people, 50 with condition, 9950 without. 
+
+  - Of the 50 with condition, 50 x 95% = 47.5 test positive.
+
+  - Of the 9950 without condition, 9950 x 2% = 199 test positive.
+
+  - Total positive = 199 + 47.5 = 246.5, **most of the positive tests are false alarms!** 
+
+  - P(condition yes|test positive) = 47.5 / 246.5 ~= 19.3%
+
+- Solve with direct Baye’s Rule:
+
+  - P(condition yes|test positive) 
+
+    = P(test positive|condition yes) x P(condition yes) / P(test positive) 
+
+    = (95% x 0.5%) / (0.5% x 95% + 99.5% x 2%)
+
+    ~= 19.3%
+
+
+
+Example 3: Customers arrive uniformly between 7-9AM. Before 8AM, 80% order coffee. After 8AM, 60% order coffee. 
+
+- What’s the overall probability a customer orders coffee? 
+
+  - Knowing ordering during 7~8AM and during 8~9AM is 50:50 chance, we calculate:
+
+  - P(coffee)
+
+    = P(coffee | before 8) x P(before 8) + P(coffee | after 8) x P(after 8)
+
+    = 80% x 50% + 60% x 50%
+
+    = 70%
+
+- If someone orders coffee, what’s the probability they arrived before 8AM?
+
+  - Likelihood: P(coffee | before 8AM) = 80%
+
+  - Prior belief: P(before 8AM) = 50%
+
+  - Evidence: P(coffee) = 70%
+
+  - so, P(before 8AM | coffee) 
+
+    = (likelihood x prior belief)/evidence 
+
+    = 80% x 50% / 70% 
+
+    = 57.1%
+
+
 
 
 
@@ -282,4 +369,6 @@ graph LR
 ## Reference
 
 - [Give Me 1 Hour, I'll Make Probability Click Forever by Zachary Huang - Youtube](https://youtu.be/H6pWY2VQ9xI?si=rPtFx9PvDhdGJzZo)
-- 
+- [1 Hour of Probability Practice. Nothing Else Matters. by Zachary Huang - Youtube](https://youtu.be/7vb8a0kA-fw?si=2eaISuQzoLfT7qwD)
+- [Bayes theorem, the geometry of changing beliefs by 3Blue1Brown - Youtube](https://youtu.be/HZGCoVF3YvM?si=ik5iyEqaaDDUAdj)
+
