@@ -137,8 +137,8 @@ Example 1: If I have a set of letters: AAAABBBBCC. What’s the probability that
 - Independence means: A doesn’t cause B, B doesn’t cause A, no hidden factors affects both. 
 - **Always check independence** before calculating **AND**. 
 - 3 ways to test **independence**: 
-  1. Check if $P(A \text{ AND } B) = P(A) \times P(B)$. 
-  2. Check if $P(A|B) = P(A)$. 
+  1. Check if $P(A \text{ AND } B) = P(A) \times P(B)$. If true, independent. 
+  2. Check if $P(A|B) = P(A)$. If true, independent. 
   3. Check if knowing B doesn’t change your belief about A. 
 
 - If independent: just multiply $P(A) \times P(B)$. 

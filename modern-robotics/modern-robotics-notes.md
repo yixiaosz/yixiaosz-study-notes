@@ -11,26 +11,26 @@ Note created on: 12/13/2025
 Definitions: 
 
 - The **configuration of a robot** is a complete **specification** of the position of every point of the robot.
-- The **number of DoF** is minimum number of real-valued (independent) coordinates that represent the configuration.
+- The **number of DOF** is minimum number of real-valued (independent) coordinates that represent the configuration.
 - The **Configuration Space (C-Space)** is the #-dimensional space that contains all of the robot’s configuration. 
 
-### 2.1 DoF of a rigid body
+### 2.1 DOF of a rigid body
 
-**number of DoF = sum(freedoms of points) - (number of independent constraint)**
+**number of DOF = sum(freedoms of points) - (number of independent constraint)**
 
-- General Rule: The Dimension of the C-Space or the # of DoF equals the sum of the freedoms of the points minus the number of independent constraints acting on those points. 
+- General Rule: The Dimension of the C-Space or the # of DOF equals the sum of the freedoms of the points minus the number of independent constraints acting on those points. 
 
 - For just rigid bodies (applied to this course): 
 
-​	$\text{number of dof} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
+​	$\text{number of DOF} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
 
 
 
-- A planar rigid body has 3 DoF, and **a spatial rigid body has 6 DoF**:
+- A planar rigid body has 3 DoF, and **a spatial rigid body has 6 DOF**:
 
 ![image-20251213213658618](assets/rigid-body-dof.jpg)
 
-- **The # of DoF** 
+- **The # of DOF** 
 
 ​	= **the dimension of its C-Space** 
 
@@ -49,23 +49,23 @@ Definitions:
 
   - `n(n-1)/2`
 
-    The general formula for calculating # of angular DoF, so it’s equivalent to `m-n`
+    The general formula for calculating # of angular DOF, so it’s equivalent to `m-n`
 
 
 
 
-### 2.2 DoF of a Robot
+### 2.2 DOF of a Robot
 
 <img src="assets/joint-types.jpg" alt="joint-types" style="zoom: 80%;" />
 
-| Joint Type      | DoF (f_i) | Contraints btwn <br />two planar rigid bodies (c_i) | Contraints btwn <br />two spatial rigid bodies (c_i) |
-| --------------- | --------- | --------------------------------------------------- | ---------------------------------------------------- |
-| Revolute (R)    | 1         | 2                                                   | 5                                                    |
-| Prismatic (P)   | 1         | 2                                                   | 5                                                    |
-| Helical (H)     | 1         | N/A                                                 | 5                                                    |
-| Cylindrical (C) | 2         | N/A                                                 | 4                                                    |
-| Universal (U)   | 2         | N/A                                                 | 4                                                    |
-| Spherical (S)   | 3         | N/A                                                 | 3                                                    |
+| Joint Type      | DOF (f_i) | Constraints btwn <br />two planar rigid bodies (c_i) | Constraints btwn <br />two spatial rigid bodies (c_i) |
+| --------------- | --------- | ---------------------------------------------------- | ----------------------------------------------------- |
+| Revolute (R)    | 1         | 2                                                    | 5                                                     |
+| Prismatic (P)   | 1         | 2                                                    | 5                                                     |
+| Helical (H)     | 1         | N/A                                                  | 5                                                     |
+| Cylindrical (C) | 2         | N/A                                                  | 4                                                     |
+| Universal (U)   | 2         | N/A                                                  | 4                                                     |
+| Spherical (S)   | 3         | N/A                                                  | 3                                                     |
 
 
 
@@ -75,13 +75,13 @@ Definitions:
 
 - As we already known:
   
-  $\text{number of dof} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
+  $\text{number of DOF} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
   
   
   
 - All constraints must be independent, otherwise this formula fails
 
-  $\text{dof} = \underbrace{m(N-1)}_{\text{rigid body freedoms}} - \underbrace{\sum_{i=1}^{J} c_i}_{\text{joint constraints}}
+  $\text{DOF} = \underbrace{m(N-1)}_{\text{rigid body freedoms}} - \underbrace{\sum_{i=1}^{J} c_i}_{\text{joint constraints}}
   \newline
   = m(N-1)-\sum_{i=1}^{J}(m-f_i)
   \newline
@@ -125,11 +125,11 @@ m = 6, N = 10, J = 12
 
 sum(f_i) = 7 * 4 = 28
 
-Using [Grubler’s formula](#grubler's-formula): DoF = 6(10 - 1 - 12) + 28 = 10
+Using [Grubler’s formula](#grubler's-formula): DOF = 6(10 - 1 - 12) + 28 = 10
 
-**if there’re n arms**: DoF = 6(2+2n-1-3n)+7n = n+6
+**if there’re n arms**: DOF = 6(2+2n-1-3n)+7n = n+6
 
-**if the revolute joints are replaced by universal joints**: m, N, J stays the same; sum(f_i) = 8n; DoF = 6(2+2n-1-3n) +8n = 2n+6
+**if the revolute joints are replaced by universal joints**: m, N, J stays the same; sum(f_i) = 8n; DOF = 6(2+2n-1-3n) +8n = 2n+6
 
 
 
@@ -196,7 +196,7 @@ Make a surface embedded in a higher-dimensional space. (the major perametrizatio
 - Implicit parametrization of a 2D sphere surface in 3D space: $(x,y,z)$ with constraint $x^2+y^2+z^2=1$ 
 - Advantage: Best for curved shape. No singularies. No need for multiple coordinate charts, hence no atlas
 - **For robots containing one or more closed loops**, usually an implicit representation is more easily obtained than an explicit parametrization.
-- Drawback: the representation has more numbers than the number of DoF
+- Drawback: the representation has more numbers than the number of DOF
 
 **Implicit representation of a rigid body in space**
 
