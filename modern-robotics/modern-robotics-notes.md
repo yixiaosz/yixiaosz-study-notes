@@ -1,6 +1,6 @@
 # Modern Robotics Study Notes
 
-Kevin Lynch’s book **Modern Robotics: Mechanics, Planning and Control**
+Kevin Lynch's book **Modern Robotics: Mechanics, Planning and Control**
 
 Note created on: 12/13/2025
 
@@ -12,7 +12,7 @@ Definitions:
 
 - The **configuration of a robot** is a complete **specification** of the position of every point of the robot.
 - The **number of DOF** is minimum number of real-valued (independent) coordinates that represent the configuration.
-- The **Configuration Space (C-Space)** is the #-dimensional space that contains all of the robot’s configuration. 
+- The **Configuration Space (C-Space)** is the #-dimensional space that contains all of the robot's configuration. 
 
 ### 2.1 DOF of a rigid body
 
@@ -22,7 +22,7 @@ Definitions:
 
 - For just rigid bodies (applied to this course): 
 
-​	$\text{number of DOF} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
+​	$\text{number of DOF} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$ 
 
 
 
@@ -49,43 +49,43 @@ Definitions:
 
   - `n(n-1)/2`
 
-    The general formula for calculating # of angular DOF, so it’s equivalent to `m-n`
+    The general formula for calculating # of angular DOF, so it's equivalent to `m-n`
 
 
 
 
 ### 2.2 DOF of a Robot
 
-<img src="assets/joint-types.jpg" alt="joint-types" style="zoom: 80%;" />
+![joint-types](assets/joint-types.jpg)
 
-| Joint Type      | DOF (f_i) | Constraints btwn <br />two planar rigid bodies (c_i) | Constraints btwn <br />two spatial rigid bodies (c_i) |
-| --------------- | --------- | ---------------------------------------------------- | ----------------------------------------------------- |
-| Revolute (R)    | 1         | 2                                                    | 5                                                     |
-| Prismatic (P)   | 1         | 2                                                    | 5                                                     |
-| Helical (H)     | 1         | N/A                                                  | 5                                                     |
-| Cylindrical (C) | 2         | N/A                                                  | 4                                                     |
-| Universal (U)   | 2         | N/A                                                  | 4                                                     |
-| Spherical (S)   | 3         | N/A                                                  | 3                                                     |
+| Joint Type      | DOF (f_i) | Constraints btwn two planar rigid bodies (c_i) | Constraints btwn two spatial rigid bodies (c_i) |
+| --------------- | --------- | ---------------------------------------------- | ----------------------------------------------- |
+| Revolute (R)    | 1         | 2                                              | 5                                               |
+| Prismatic (P)   | 1         | 2                                              | 5                                               |
+| Helical (H)     | 1         | N/A                                            | 5                                               |
+| Cylindrical (C) | 2         | N/A                                            | 4                                               |
+| Universal (U)   | 2         | N/A                                            | 4                                               |
+| Spherical (S)   | 3         | N/A                                            | 3                                               |
 
 
 
-#### Grubler’s formula
+#### Grubler's formula
 
 - determining the number of degrees of freedom of a robot, simply by counting the number of rigid bodies and joints. 
 
 - As we already known:
+
+  $\text{number of DOF} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$ 
+
   
-  $\text{number of DOF} = \sum(\text{freedoms of bodies}) - (\text{number of independent constraints})$
-  
-  
-  
+
 - All constraints must be independent, otherwise this formula fails
 
   $\text{DOF} = \underbrace{m(N-1)}_{\text{rigid body freedoms}} - \underbrace{\sum_{i=1}^{J} c_i}_{\text{joint constraints}}
   \newline
   = m(N-1)-\sum_{i=1}^{J}(m-f_i)
   \newline
-  = m(N-1-J)+\sum_{i=1}^{J}(f_i)$
+  = m(N-1-J)+\sum_{i=1}^{J}(f_i)$ 
 
 
 
@@ -95,7 +95,7 @@ $N$ = # of bodies, including ground
 
 $J$ = # of joints 
 
-​	(**a single joint can only connect two rigid bodies**, so if there’s more than two on one body, there must be more than one joint there)
+​	(**a single joint can only connect two rigid bodies**, so if there's more than two on one body, there must be more than one joint there)
 
 $m$ = **6 for spatial bodies**, **3 for planar bodies**, 10 for 4-D bodies
 
@@ -109,7 +109,7 @@ $c_i$ = the number of constraints provided by joint i
 
 $c_i$ + $f_i$ = $m$ for all i
 
-- If Grubler’s formula counts 0 or negative:
+- If Grubler's formula counts 0 or negative:
 
   **the constraints implied by the joints may be independent** or the mechanism is incapable of motion. 
 
@@ -125,9 +125,9 @@ m = 6, N = 10, J = 12
 
 sum(f_i) = 7 * 4 = 28
 
-Using [Grubler’s formula](#grubler's-formula): DOF = 6(10 - 1 - 12) + 28 = 10
+Using [Grubler's formula](#grublers-formula): DOF = 6(10 - 1 - 12) + 28 = 10
 
-**if there’re n arms**: DOF = 6(2+2n-1-3n)+7n = n+6
+**if there're n arms**: DOF = 6(2+2n-1-3n)+7n = n+6
 
 **if the revolute joints are replaced by universal joints**: m, N, J stays the same; sum(f_i) = 8n; DOF = 6(2+2n-1-3n) +8n = 2n+6
 
@@ -142,12 +142,12 @@ Using [Grubler’s formula](#grubler's-formula): DOF = 6(10 - 1 - 12) + 28 = 10
     - an open interval of the line $(a,b)\subset R^1$ is topologically equivalent to $E^1$ if stretched
   - **a closed interval of the line** $[a,b]\subset R^1$ ($R^1$ means a point on the line; line includes the endpoints $a,b$)
 - In higher dimensions:
-  - $R^n$ is the $n$-dimensional Euclinean space
+  - $R^n$ is the $n$-dimensional Euclidean space
   - $S^n$ is the $n$-dimensional surface of a sphere in an $(n+1)$-dimensional space (e.g. $S^2$ is the 2-D surface of a sphere in a 3-D space)
 - The topology of a space is **a fundamental property of the space** itself.
 - The topology of a space is **independent of how we choose coordinates** to represent points in the space (e.g. ($x,y$) with constraint $x^2+y^2=1$) 
 
-![c-space-topology](assets/c-space-topology.jpg)
+![c-space-topology](./assets/c-space-topology.jpg)
 
 #### C-space as Cartesian Product 
 
@@ -215,13 +215,14 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 
 ​	(2) the orientation of $L_4$ is always horizontal. 
 
-> From Grubler’s formula, we knew this mechanism has **1 DoF** in 2D space. 
+> Based on [Grubler's formula](#grublers-formula), we knew this mechanism has **1 DOF** in 2D space. 
 
 - Dimensional space: 4-D space
 
   $ \boldsymbol{\theta} = \begin{bmatrix} \theta_1 \\ \theta_2 \\ \theta_3 \\ \theta_4 \end{bmatrix} \in \mathbb{R}^4 $   
 
 - The **absolute angles** of each linkage:
+
   - angle of L1: $\theta_1$ 
   - angle of L3: $\theta_1+\theta_2$ 
   - angle of L4: $\theta_1+\theta_2+\theta_3$ 
@@ -248,8 +249,9 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
   (3) $\theta_1 + \theta_2 + \theta_3 + \theta_4 - 2\pi = 0$ 
 
 - (1), (2), (3) are referred to as the **loop-closure equations**
+
   - Exist in a four joint space AKA **a 4D space** : ($\theta_1, \theta_2, \theta_3, \theta_4$)
-  - **there’re 3 equations, b ut have 4 unknowns**, meaning the system is not locked, and has 1 DOF
+  - **there're 3 equations, b ut have 4 unknowns**, meaning the system is not locked, and has 1 DOF
   - Hence **the C-space of this 4-bar linkage is just a one-dimensional curve** in a 4-dimensional joint space.
 
 - Thus, the 4-bar linkage can be represented by 4 dimensional joint space (in the form of column vector below) subject to 3 loop constraints.
@@ -329,7 +331,7 @@ Example:
 
 ### 2.5 Task Space and Workspace
 
-- Task space: the space in which the robot’s task is naturally expressed. 
+- Task space: the space in which the robot's task is naturally expressed. 
   - The task space depends on the task, not the robot.
 - Wrokspace: a specification of the reachable configurations of the end effector. 
   - The workspace of a particular robot is independent of the task.
@@ -339,9 +341,9 @@ Example:
 ## Chapter 3: Rigid-Body Motions
 
 - The **reference frame is an implicit representation of the C-space** of a rigid body
-- By attaching a reference frame to a rigid body, the frame **describes the body’s position and orientation in a 4x4 matrix**.
-- Rigid body’s velocity: $R^6$, called **spatial velocity or twist**, contains 3 angular velocities and 3 linear velocities. 
-- Rigid body’s force: $F^6$, called spatial force or wrench, contains moments (torques) and forces. 
+- By attaching a reference frame to a rigid body, the frame **describes the body's position and orientation in a 4x4 matrix**.
+- Rigid body's velocity: $R^6$, called **spatial velocity or twist**, contains 3 angular velocities and 3 linear velocities. 
+- Rigid body's force: $F^6$, called spatial force or wrench, contains moments (torques) and forces. 
 
 
 
@@ -396,9 +398,9 @@ Vector Notations
 
   - Detailed way: 
 
-     $\hat{x}_b = (\cos{\theta}\hat{x}_s,\sin{\theta}\hat{y}_s)$,
+    $\hat{x}_b = (\cos{\theta}\hat{x}_s,\sin{\theta}\hat{y}_s)$,
 
-     $\hat{y}_b = (-\sin{\theta}\hat{x}_s,\cos{\theta}\hat{y}_s)$.
+    $\hat{y}_b = (-\sin{\theta}\hat{x}_s,\cos{\theta}\hat{y}_s)$.
 
 
 
@@ -444,13 +446,15 @@ Vector Notations
 
 - The rigid body is then moved in a way that:
 
-  - {d} moves to {d’}. 
-  - {d’} is coincident with frame{b}, which is described by $(P,p)$ in {s}.
-  - {c} moves to {c’} = $(R',r')$
+  - {d} moves to {d'}. 
+
+  - {d'} is coincident with frame{b}, which is described by $(P,p)$ in {s}.
+
+  - {c} moves to {c'} = $(R',r')$
 
   - ==$R' = PR$== ,
 
-    ==$r’ = Pr + p$==.
+    ==$r' = Pr + p$==.
 
 - This is called a ==**rigid-body displacement**/motion==.
 
@@ -479,3 +483,14 @@ The rotation matrix-vector pair, such as $(P,p)$, can be used for **3 purposes**
 
 - 
 
+
+
+
+
+
+
+
+
+## Supplement 1: Integrability
+
+- 
