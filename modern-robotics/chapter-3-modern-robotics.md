@@ -148,9 +148,3 @@ The rotation matrix-vector pair, such as $(P,p)$, can be used for **3 purposes**
 
 
 
-
-
-
-## Supplement 1: Integrability
-
-- 

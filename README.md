@@ -8,25 +8,33 @@ I manage and sync my learning notes (markdown files) here.
 
 ## List of Content
 
+### 2026
+
+- [LeRobot](./lerobot)
+  - ➡️ In progress 
+  - 🤖 Learning embodied imitation learning with LeRobot SO-101
+- [Modern Robotics](./modern-robotics)
+  - ➡️ In progress 
+  - 🤖 Coursera, Self-guided Robotics fundamentals
+- **tools**
+  - [Java](./tools/java)
+    - ➡️ In progress
+    - ☕ Basics of Java programming
+  - [PID Controller](./tools/pid-controller)
+    - ➡️ In progress 
+    - 🕹️ PID control theory
+
+
+
+
+
 ### 2025
 
 
-- [LeRobot](./lerobot)
-    - ➡️ In progress 
-    - 🤖 Learning embodied imitation learning with LeRobot SO-101
-- [Modern Robotics](./modern-robotics)
-    - ➡️ In progress 
-    - 🤖 Coursera, Self-guided Robotics fundamentals
 - [Python for Everyone](./py4e-coursera)
     - ✅ Completed
     - 👾 Coursera, Refresher for my Python knowledge
 - **tools**
-    - [Java](./tools/java)
-        - ➡️ In progress
-        - ☕ Basics of Java programming
-    - [PID Controller](./tools/pid-controller)
-        - ➡️ In progress 
-        - 🕹️ PID control theory
     - [Tavily Web Search](./tools/tavily)
         - ✅ Completed
         - 🔍 Quick reference for Tavily API usage

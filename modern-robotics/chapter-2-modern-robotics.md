@@ -251,7 +251,7 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 - (1), (2), (3) are referred to as the **loop-closure equations**
 
   - Exist in a four joint space AKA **a 4D space** : ($\theta_1, \theta_2, \theta_3, \theta_4$)
-  - **there're 3 equations, b ut have 4 unknowns**, meaning the system is not locked, and has 1 DOF
+  - **there're 3 equations, but have 4 unknowns**, meaning the system is not locked, and has 1 DOF
   - Hence **the C-space of this 4-bar linkage is just a one-dimensional curve** in a 4-dimensional joint space.
 
 - Thus, the 4-bar linkage can be represented by 4 dimensional joint space (in the form of column vector below) subject to 3 loop constraints.
@@ -286,7 +286,7 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 
   $ \frac{d}{dt} g(\theta(t)) = \frac{\partial g}{\partial \theta_1} \frac{d\theta_1}{dt} + \frac{\partial g}{\partial \theta_2} \frac{d\theta_2}{dt} + \dots + \frac{\partial g}{\partial \theta_n} \frac{d\theta_n}{dt} = 0$ 
 
-- As we knew that $\dot{\theta} = \frac{d\theta}{dt}$ :
+- Because we also know that $\dot{\theta} = \frac{d\theta}{dt}$: 
 
 ​	$\frac{\partial g}{\partial \theta_1} \dot{\theta}_1 + \dots + \frac{\partial g}{\partial \theta_n} \dot{\theta}_n = 0 $ 
 
@@ -335,3 +335,54 @@ Example:
   - The task space depends on the task, not the robot.
 - Wrokspace: a specification of the reachable configurations of the end effector. 
   - The workspace of a particular robot is independent of the task.
+
+
+
+## Supplement 1: Partial Derivatives
+
+> Reference: [Partial Derivatives and the Gradient of a Function by Professor Dave Explains - Youtube](https://youtu.be/AXH9Xm6Rbfc?si=Hi2mEpz1IyRVZb0v) 
+
+- For regular single-variable derivatives, such as $f(x) = sin(x)$, we know $\frac{df}{dx} = cos(x)\,dx$.  
+
+- For **multi-variable derivative**, partial derivatives **treats only one variable and treats others as constant**. 
+
+- Example: $f(x,y) = xy^2 + x^3$ 
+
+  - Derivative with respect to x: 
+
+    $\frac{\partial f}{\partial x} = \frac{\partial}{\partial x}(x)y^2 + \frac{\partial}{\partial x}(x^3) = y^2 + 3x^2$ 
+
+  - Derivative with respect to y: 
+
+    $\frac{\partial f}{\partial y} = \frac{\partial}{\partial y}x(y^2) + \frac{\partial}{\partial y}x^3 = 2xy$ 
+
+  - Thus, the **gradient of the function is a vector made up of all the partial derivatives of the function**. 
+
+    1. Unit vector notation: $\text{grad f} = \frac{\partial f}{\partial x}\hat{i} + \frac{\partial f}{\partial y}\hat{j} = (y^2 + 3x^2)\hat{i} + (2xy)\hat{j}$ 
+
+    2. Vector component notation: $\text{grad f} = <\frac{\partial f}{\partial x} , \frac{\partial f}{\partial y}> = <y^2 + 3x^2 , 2xy>$ 
+    3. In 3-D space, the gradient will be $\text{grad f} = \frac{\partial f}{\partial x}\hat{i} + \frac{\partial f}{\partial y}\hat{j} + \frac{\partial f}{\partial z}\hat{k}$ 
+
+- Alternative notation for vector component notation: $\triangledown$, **del** or nobla. 
+
+  - e.g., $\triangledown = <\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}>$ 
+
+- Example 2: consider now a scalar function $\bar{x}$ with multiple inputs (this time in column vector notation). 
+
+  - Given that $\bar{x} = \begin{bmatrix} \ x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$, and $f(x_1,x_2) = 3(x_1)^2+(x_2)^2$ 
+  - As the gradient of a function follows: $\triangledown f(\bar{x}) = \frac{\partial f(\bar{x})}{\partial \bar{x}} = \begin{bmatrix} \ \frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \\ \vdots  \\ \frac{\partial f(\bar{x})}{\partial x_n} \end{bmatrix}$, we can calculate: $\triangledown f(\bar{x}) = \begin{bmatrix} \ \frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \end{bmatrix} = \begin{bmatrix} 6x_1 \\ 3(x_2)^2 \end{bmatrix}$ 
+  - the $x_1$ gradient $\frac{\partial f(\bar{x})}{\partial x_1}$ is the **sensitivity of the function** $f(\bar{x})$ **to change in** $x_1$. 
+  -  the $x_2$ gradient $\frac{\partial f(\bar{x})}{\partial x_2}$ is the sensitivity of the function $f(\bar{x})$ to change in $x_2$. 
+
+- Property of the gradient:
+
+  1. The gradient points in the **direction of maximum change**. 
+  2. Its magnitude is equal to the maximum rate of change. 
+
+
+
+## Supplement 2: Jacobian Matrix 
+
+> Reference: [The Jacobian Matrix by Christopher Lum - Youtube](https://youtu.be/QexBVGVM690?si=TXnUbeAiJf-dQFwF) 
+
+- 
