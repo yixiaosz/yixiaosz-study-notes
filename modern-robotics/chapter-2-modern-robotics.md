@@ -284,7 +284,7 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 
 - The total derivative with respect to time $t$ is the sum of the partial derivatives for every angle
 
-  $ \frac{d}{dt} g(\theta(t)) = \frac{\partial g}{\partial \theta_1} \frac{d\theta_1}{dt} + \frac{\partial g}{\partial \theta_2} \frac{d\theta_2}{dt} + \dots + \frac{\partial g}{\partial \theta_n} \frac{d\theta_n}{dt} = 0$ 
+  $\frac{d}{dt} g(\theta(t)) = \frac{\partial g}{\partial \theta_1} \frac{d\theta_1}{dt} + \frac{\partial g}{\partial \theta_2} \frac{d\theta_2}{dt} + \dots + \frac{\partial g}{\partial \theta_n} \frac{d\theta_n}{dt} = 0$ 
 
 - Because we also know that $\dot{\theta} = \frac{d\theta}{dt}$: 
 
@@ -298,9 +298,9 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 
 - Further noted in matrix form:
 
-​	$ \underbrace{\begin{bmatrix} \frac{\partial g_1}{\partial \theta_1} & \dots & \frac{\partial g_1}{\partial \theta_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial g_k}{\partial \theta_1} & \dots & \frac{\partial g_k}{\partial \theta_n} \end{bmatrix}}_{\text{The Jacobian Matrix } A(\theta)} \cdot \underbrace{\begin{bmatrix} \dot{\theta}_1 \\ \vdots \\ \dot{\theta}_n \end{bmatrix}}_{\text{Velocity Vector } \dot{\theta}} = \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix} $ 
+​	$$\underbrace{\begin{bmatrix} \frac{\partial g_1}{\partial \theta_1} & \dots & \frac{\partial g_1}{\partial \theta_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial g_k}{\partial \theta_1} & \dots & \frac{\partial g_k}{\partial \theta_n} \end{bmatrix}}_{\text{The Jacobian Matrix } A(\theta)} \cdot \underbrace{\begin{bmatrix} \dot{\theta}_1 \\ \vdots \\ \dot{\theta}_n \end{bmatrix}}_{\text{Velocity Vector } \dot{\theta}} = \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix}$$ 
 
-- **The generic Pfaffian form**: ==$A(\theta)\dot{\theta} = 0$== 
+- **The generic Pfaffian form**: $A(\theta)\dot{\theta} = 0$
   - $\dot{\theta}$ is the movement
   - The dot product being 0 means the motion must be perpendicular to the constraint forces
 - **Integrable Pfaffian constraints are holonomic constraints**
@@ -369,10 +369,23 @@ Example:
 
 - Example 2: consider now a scalar function $\bar{x}$ with multiple inputs (this time in column vector notation). 
 
-  - Given that $\bar{x} = \begin{bmatrix} \ x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$, and $f(x_1,x_2) = 3(x_1)^2+(x_2)^2$ 
-  - As the gradient of a function follows: $\triangledown f(\bar{x}) = \frac{\partial f(\bar{x})}{\partial \bar{x}} = \begin{bmatrix} \ \frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \\ \vdots  \\ \frac{\partial f(\bar{x})}{\partial x_n} \end{bmatrix}$, we can calculate: $\triangledown f(\bar{x}) = \begin{bmatrix} \ \frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \end{bmatrix} = \begin{bmatrix} 6x_1 \\ 3(x_2)^2 \end{bmatrix}$ 
+  - Given that: 
+
+    $$\bar{x} = \begin{bmatrix} \ x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$$
+
+    $$f(x_1,x_2) = 3(x_1)^2+(x_2)^2$$
+
+  - As the gradient of a function follows: 
+
+    $$\triangledown f(\bar{x}) = \frac{\partial f(\bar{x})}{\partial \bar{x}} = \begin{bmatrix} \ \frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \\ \vdots  \\ \frac{\partial f(\bar{x})}{\partial x_n} \end{bmatrix}$$
+
+    We can calculate: 
+
+    $$\triangledown f(\bar{x}) = \begin{bmatrix} \ \frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \end{bmatrix} = \begin{bmatrix} 6x_1 \\ 3(x_2)^2 \end{bmatrix}$$ 
+
   - the $x_1$ gradient $\frac{\partial f(\bar{x})}{\partial x_1}$ is the **sensitivity of the function** $f(\bar{x})$ **to change in** $x_1$. 
-  -  the $x_2$ gradient $\frac{\partial f(\bar{x})}{\partial x_2}$ is the sensitivity of the function $f(\bar{x})$ to change in $x_2$. 
+
+  -  the $x_2$ gradient $\frac{\partial f(\bar{x})}{\partial x_2}$ is the **sensitivity of the function** $f(\bar{x})$ **to change in** $x_2$. 
 
 - Property of the gradient:
 
@@ -385,4 +398,7 @@ Example:
 
 > Reference: [The Jacobian Matrix by Christopher Lum - Youtube](https://youtu.be/QexBVGVM690?si=TXnUbeAiJf-dQFwF) 
 
-- 
+- A Jacobian Matrix is a partial set of derivatives asking how do each one of the functions change the input variables
+
+
+
