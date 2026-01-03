@@ -260,72 +260,94 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 
 #### Holonomic Constraints
 
-- **general scenario**: $ \boldsymbol{\theta} = \begin{bmatrix} \theta_1 \\ \theta_2 \\ ... \\ \theta_n \end{bmatrix} \in \mathbb{R}^n $ 
+**In general scenario**: 
 
-- **The Close-loop equations ARE the ==holonomic constraints== of the mechanism**
+- we have a robotic mechanism that has a set of close-loop equations $\bar{g}(\bar{\theta})$ with vector input $$ \boldsymbol{\bar{\theta}} = \begin{bmatrix} \theta_1 \\ \theta_2 \\ ... \\ \theta_n \end{bmatrix} \in \mathbb{R}^n $$ 
+- We can **represent the mechanism’s ==holonomic constraints== by a [Jacobian Matrix](#supplement-2-jacobian-matrix) of its Close-loop equations**.  
 
-​	$g(\theta) = \begin{bmatrix} g_1(\theta_1, \ldots, \theta_n) \\ \vdots \\ g_k(\theta_1, \ldots, \theta_n) \end{bmatrix} = 0,\ k \le n ,\ g(\theta) \in \mathbb{R}^n $ 
+​	$$\bar{g}(\bar{\theta}) = \begin{bmatrix} g_1(\theta_1, \ldots, \theta_n) \\ \vdots \\ g_k(\theta_1, \ldots, \theta_n) \end{bmatrix} = 0,\ k \le n ,\ g(\theta) \in \mathbb{R}^n$$ 
 
 ​	$n$ = total variables (dimension of the joint space)
 
 ​	$k$ = number of holonomic constraints
 
-- The close-loop equations/holonomic constraints properties:
+- The holonomic constraints properties:
 
+  - All holonomic constraints must be in the form of something = 0 (so they’re integrable). 
   - A set of $k$ independent queations, with $k \le$ n, meaning that **holonomic constraints reduces the joint space**
-  - They constraints on only configuration aka position 
+  - **They constraints on only configuration** aka position 
   - C-Space Dimension: $DOF = n - k$  aka $ \text{DOF} = n - (\text{number of independent Holonomic Constraints}) $ 
-
   
+
+
 
 #### Pfaffian Constraints
 
-- We knew that the loop must stay closed so $g(\theta) = 0$ 
-
-- The total derivative with respect to time $t$ is the sum of the [partial derivatives](#supplement-1-partial-derivatives) for every angle
-
-  $\frac{d}{dt} g(\theta(t)) = \frac{\partial g}{\partial \theta_1} \frac{d\theta_1}{dt} + \frac{\partial g}{\partial \theta_2} \frac{d\theta_2}{dt} + \dots + \frac{\partial g}{\partial \theta_n} \frac{d\theta_n}{dt} = 0$ 
-
-- Because we also know that $\dot{\theta} = \frac{d\theta}{dt}$: 
-
-​	$\frac{\partial g}{\partial \theta_1} \dot{\theta}_1 + \dots + \frac{\partial g}{\partial \theta_n} \dot{\theta}_n = 0 $ 
-
-> Note of the $\dot{\theta}$ notation
+> About the $\dot{\theta}$ notation: 
 >
 > - $\theta$  = **Position** (Angle)
 > - $\dot{\theta} = \frac{d\theta}{dt}$ = **velocity** (angular velocity)
 > - $\ddot{\theta} = \frac{d^2\theta}{dt^2}$ = **acceleration** (angular acceleration)
 
-- Further noted in [Jacobian matrix](#supplement-2-jacobian-matrix) form:
+- We can differentiate the holonomic constraints to obtain the mechanism’s Pfaffian constraints. The total derivative of the holonomic constraints with respect to time $t$ is the sum of the [partial derivatives](#supplement-1-partial-derivatives) for every angle $\theta$. 
 
-​	$$\underbrace{\begin{bmatrix} \frac{\partial g_1}{\partial \theta_1} & \dots & \frac{\partial g_1}{\partial \theta_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial g_k}{\partial \theta_1} & \dots & \frac{\partial g_k}{\partial \theta_n} \end{bmatrix}}_{\text{The Jacobian Matrix } A(\theta)} \cdot \underbrace{\begin{bmatrix} \dot{\theta}_1 \\ \vdots \\ \dot{\theta}_n \end{bmatrix}}_{\text{Velocity Vector } \dot{\theta}} = \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix}$$ 
+- (Assuming the mechanism is in motion, following the time trajectory $\bar{\theta}(t)$. )
+
+  **Holonomic constraints**: $$\bar{g}(\bar{\theta}) = \begin{bmatrix} g_1(\theta_1, \ldots, \theta_n) \\ \vdots \\ g_k(\theta_1, \ldots, \theta_n) \end{bmatrix} = 0,\ k \le n ,\ g(\theta) \in \mathbb{R}^n$$ 
+
+  **Pfaffian constraints** (velocity constraints): $$\frac{d}{dt}\bar{g}(\bar{\theta}(t)) = \begin{bmatrix} \frac{\partial g_1}{\partial \theta_1}(\theta)\dot{\theta}_1 + \frac{\partial g_1}{\partial \theta_2}(\theta)\dot{\theta}_2 + \dots + \frac{\partial g_1}{\partial \theta_n}(\theta)\dot{\theta}_n\\ \vdots \\ \frac{\partial g_k}{\partial \theta_1}(\theta)\dot{\theta}_1 + \frac{\partial g_k}{\partial \theta_2}(\theta)\dot{\theta}_2 + \dots + \frac{\partial g_k}{\partial \theta_n}(\theta)\dot{\theta}_n\end{bmatrix} = 0$$ 
+
+- Separating matrix, we got: 
+
+​	$$\underbrace{\begin{bmatrix} \frac{\partial g_1}{\partial \theta_1}(\theta) & \dots & \frac{\partial g_1}{\partial \theta_n}(\theta) \\ \vdots & \ddots & \vdots \\ \frac{\partial g_k}{\partial \theta_1}(\theta) & \dots & \frac{\partial g_k}{\partial \theta_n}(\theta) \end{bmatrix}}_{\text{Jacobian Matrix } A(\theta)} \cdot \underbrace{\begin{bmatrix} \dot{\theta}_1 \\ \vdots \\ \dot{\theta}_n \end{bmatrix}}_{\text{Velocity Vector } \dot{\theta}} = \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix}$$ 
 
 - **The generic Pfaffian form**: $A(\theta)\dot{\theta} = 0$
-  - $\dot{\theta}$ is the movement
-  - The dot product being 0 means the motion must be perpendicular to the constraint forces
-- **Integrable Pfaffian constraints are holonomic constraints**
-- **Non-integrable Pfaffian constraints are nonholonomic constraints**
+  - $A(\theta)$ is the Jacobian Matrix. 
+  - $\dot{\theta}$ is the velocity vector. 
+- **Integrable Pfaffian constraints are holonomic constraints**: always in the form of equality, like $x^2 + y^2 - r^2 = 0$. 
+- **Non-integrable Pfaffian constraints are non-holonomic constraints**: always in the form of inequality, like a range limit $z \ge 0$. 
 
 
 
-#### Nonholonomic Constraints
+#### Non-holonomic Constraints
 
-- the non-integrable Pfaffian constraints
+- The non-integrable constraints are Jacobian Matrices that don’t exist a differentiable function $g$ that $\frac{\partial g(q)}{\partial q} = A(q)$. 
+
+- If that is not the case, then there must be a differentiable $g_1(q)$ that satisfies the following four equalities 
+
+  (for some $h_i, i = 1,...,4$)
+
+  - $\frac{\partial g_1}{\partial q_1} = 1 \rightarrow g_1(q) = q_1 + h_1(q_2,q_3,q_4)$ 
+  -  $\frac{\partial g_1}{\partial q_2} = 0 \rightarrow g_1(q) = h_2(q_1,q_3,q_4)$ 
+  - $\frac{\partial g_1}{\partial q_3} = 0 \rightarrow g_1(q) = h_3(q_1,q_2,q_4)$ 
+  - $\frac{\partial g_1}{\partial q_4} = -r\cos{q_3} \rightarrow g_1(q) = -rq_4\cos{q_3}h_4(q_1,q_2,q_3)$ 
 
 ![pfaffian](assets/pfaffian.jpg)
 
-#### Integrability test
+#### Non-holonomic Example
 
-Example: 
+A coin of radius $r$ rolls without slipping on a plane
 
-- We have a differential constraint: $(1+cosq_1)\dot{q_1}+(2+sinq_2)\dot{q_2}+(cosq_1+sinq_2+3)\dot{q_3} = 0$ 
+1. **Direction:** It must move in the direction it is pointing. This direction is given by the steering angle $\phi$ , represented by the vector ($\cos{\phi},\sin{\phi}$). 
 
-- General Pfaffian form: $A_1(q) \dot{q}_1 + A_2(q) \dot{q}_2 + A_3(q) \dot{q}_3 = 0$ 
+2. **Speed:** The forward speed of the contact point on the ground must exactly match the tangential speed of the coin's rotation. If the coin rotates at a rate of $\dot{\theta}$, its tangential speed is $r\dot{\theta}$. 
 
-- The coefficients are: 
-  - $A_1 = 1 + \cos q_1$ 
-  - $A_2 = 2 + \sin q_2$ 
-  - $A_3 = \cos q_1 + \sin q_2 + 3$ 
+3. **List velocity equations**: $\begin{bmatrix} \dot{x} \\ \dot{y} \end{bmatrix} = \begin{bmatrix} r\dot{\theta} \cos \phi \\ r\dot{\theta} \sin \phi \end{bmatrix}$ 
+
+4. **Rearrange the equations** to include all four variables + set them to zero: 
+
+   1. $1 \cdot \dot{x} + 0 \cdot \dot{y} + 0 \cdot \dot{\phi} - (r \cos \phi) \dot{\theta} = 0$ 
+   2. $0 \cdot \dot{x} + 1 \cdot \dot{y} + 0 \cdot \dot{\phi} - (r \sin \phi) \dot{\theta} = 0$ 
+
+5. **Covert to the Pfaffian form**: $$\begin{bmatrix} 1 & 0 & 0 & -r \cos q_3 \\ 0 & 1 & 0 & -r \sin q_3 \end{bmatrix} \begin{bmatrix} \dot{q}_1 \\ \dot{q}_2 \\ \dot{q}_3 \\ \dot{q}_4 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}, \begin{bmatrix} \dot{q}_1 \\ \dot{q}_2 \\ \dot{q}_3 \\ \dot{q}_4 \end{bmatrix} = \begin{bmatrix} \dot{x} \\ \dot{y} \\ \dot{\phi} \\ \dot{\theta} \end{bmatrix}$$
+
+6. **Why it’s non-holonomic?** 
+
+   - **Pure maths explanation** (which I don’t see explicitly): this function set don’t exist a differentiable function $g$ that $\frac{\partial g(q)}{\partial q} = A(q)$. 
+
+   - **Physics setting explanation** (more intuitively viable): There’s **no coordinate constraint** for the coin! If these constraints were integrable, they would "trap" the coin on a 2D surface within its 4D configuration space. However, we know from experience that we can move a rolling object to any position $(x,y)$ with any orientation $\phi$. 
+
+     Although we have the fixed velocity constraint $g(q,\dot{q}) = 0$,  there is no fixed algebraic relationship $g(x, y, \phi, \theta) = 0$ that always hold true. 
 
 
 
