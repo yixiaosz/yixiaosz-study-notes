@@ -371,13 +371,13 @@ Example:
 
   - Given that: 
 
-    $$\bar{x} = \begin{bmatrix} \ x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$$
+    $$\bar{x} = \begin{bmatrix} \ x_1 \\\ x_2 \\\ \vdots \\\ x_n \end{bmatrix}$$
 
     $$f(x_1,x_2) = 3(x_1)^2+(x_2)^2$$
 
   - As the gradient of a function follows: 
 
-    $$\triangledown f(\bar{x}) = \frac{\partial f(\bar{x})}{\partial \bar{x}} = \begin{bmatrix} \ \frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \\ \vdots  \\ \frac{\partial f(\bar{x})}{\partial x_n} \end{bmatrix}$$
+    $$\triangledown f(\bar{x}) = \frac{\partial f(\bar{x})}{\partial \bar{x}} = \begin{bmatrix}\frac{\partial f(\bar{x})}{\partial x_1} \\\ \frac{\partial f(\bar{x})}{\partial x_2} \\\ \vdots  \\\ \frac{\partial f(\bar{x})}{\partial x_n} \end{bmatrix}$$
 
     We can calculate: 
 
