@@ -6,6 +6,36 @@ Note created on: 12/13/2025
 
 
 
+## Chapter 2 Summary
+
+- A robot is mechanically constructed from links that are connected by various types of joint. 
+  - **The links are usually modeled as rigid bodies**. 
+  - An **end-effector** such as a gripper may be attached to some link of the robot. 
+  - The **Actuators** (like servos) deliver forces and torques to the joints, thereby causing motion of the robot.
+- [Types of joints](#22-dof-of-a-robot):
+  - **The most widely used 1-DOF joints are the revolute joint**, which allows rotation about the joint axis, and the prismatic joint, which allows translation in the direction of the joint axis. 
+  - Some common two-DOF joints include the cylindrical joint, which is constructed by serially connecting a revolute and prismatic joint, and the universal joint, which is constructed by orthogonally connecting two revolute joints. 
+  - The spherical joint is a 3-DOF joint whose function is similar to the human shoulder joint.
+- **The [configuration of a rigid body](#21-dof-of-a-rigid-body) is a specification of the location of all its points**. 
+  - For a rigid body moving in the plane, **3** independent parameters are needed to specify the configuration. 
+  - For a rigid body moving in three-dimensional space, **6** independent parameters are needed to specify the configuration. 
+- The number of degrees of freedom of a robot can be calculated using [Grubler’s formula](#grublers-formula). 
+- A robot’s [C-space](#23-topology-and-representation) be **parametrized explicitly** or **represented implicitly**.
+  - For a robot with $n$ degrees of freedom, an [explicit parametrization](#explicit-parametrization) uses $n$ coordinates, the minimum necessary. 
+  - An [implicit representation](#implicit-representation) involves m coordinates with $m \ge n$, with the $m$ coordinates subject to $m - n$ constraint equations. 
+  - With an implicit parametrization, a robot’s C-space can be viewed as a surface of dimension $n$ embedded in a space of higher dimension $m$.
+- The C-space of an $n$-DOF robot whose structure contains one or more closed loops can be implicitly represented using $k$ loop-closure equations of the form $g(\theta) = 0$. Such constraints equations are called [holonomic constraints](#holonomic-constraints). 
+- Assuming that $\theta$ varies with time $t$, the [holonomic constraints](#holonomic-constraints) $g(\theta(t)) = 0$ can be differentiated to yield the robot’s velocity constraints $\frac{\partial g}{\partial \theta}(\theta)(\dot{\theta}) = 0$.  
+- A robot’s motion can also be subject to velocity of the [Pfaffian form](#pfaffian-constraints): $A(\theta)\dot{\theta} = 0$. 
+  - **Integrable Pfaffian constraints can be integrated into holonomic constraints**. 
+  - **Non-integrable Pfaffian constraints are called [non-holonomic constraints](#non-holonomic-constraints).** These constraints reduce the dimension of feasible velocities of the system but do not reduce the dimension of the reachable C-space. 
+  - Non-holonomic constraints arise in robot systems subject to conservation of momentum or rolling without slipping.
+- A robot’s [task space](#25-task-space-and-workspace) is a space in which the **robot’s task can be naturally expressed**. A robot’s workspace is a specification of the configurations that the **end-effector of the robot can reach**.
+
+
+
+
+
 ## Chapter 2: C-Space
 
 Definitions: 
@@ -172,8 +202,11 @@ Using [Grubler's formula](#grublers-formula): DOF = 6(10 - 1 - 12) + 28 = 10
 
 #### Numerical representation of C-Space 
 
-- **Explicit parametrization**: minimum number of coordinates 
-  - simplicity, but may have poor behavior because the space change
+##### Explicit parametrization
+
+- minimum number of coordinates 
+
+- simplicity, but may have poor behavior because the space change
 
 - **Example: to represent the C-space of the surface of a sphere** (pendulum with one fixed end)
 
@@ -189,7 +222,7 @@ Using [Grubler's formula](#grublers-formula): DOF = 6(10 - 1 - 12) + 28 = 10
 
   - B. Use implicit parametrization
 
-#### Implicit parametrization
+##### Implicit representation
 
 Make a surface embedded in a higher-dimensional space. (the major perametrization in this book)
 
@@ -322,6 +355,8 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
   - $\frac{\partial g_1}{\partial q_3} = 0 \rightarrow g_1(q) = h_3(q_1,q_2,q_4)$ 
   - $\frac{\partial g_1}{\partial q_4} = -r\cos{q_3} \rightarrow g_1(q) = -rq_4\cos{q_3}h_4(q_1,q_2,q_3)$ 
 
+- Non-holonomic constraints are usually associated with robotic systems that have **conservation of momentum or rolling without slipping**.
+
 ![pfaffian](assets/pfaffian.jpg)
 
 #### Non-holonomic Example
@@ -357,6 +392,12 @@ A coin of radius $r$ rolls without slipping on a plane
   - The task space depends on the task, not the robot.
 - Wrokspace: a specification of the reachable configurations of the end effector. 
   - The workspace of a particular robot is independent of the task.
+
+
+
+
+
+
 
 
 
