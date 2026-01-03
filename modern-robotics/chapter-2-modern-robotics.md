@@ -282,7 +282,7 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 
 - We knew that the loop must stay closed so $g(\theta) = 0$ 
 
-- The total derivative with respect to time $t$ is the sum of the partial derivatives for every angle
+- The total derivative with respect to time $t$ is the sum of the [partial derivatives](#supplement-1-partial-derivatives) for every angle
 
   $\frac{d}{dt} g(\theta(t)) = \frac{\partial g}{\partial \theta_1} \frac{d\theta_1}{dt} + \frac{\partial g}{\partial \theta_2} \frac{d\theta_2}{dt} + \dots + \frac{\partial g}{\partial \theta_n} \frac{d\theta_n}{dt} = 0$ 
 
@@ -296,7 +296,7 @@ This four-bar linkage can be viewed as a serial chain with 4 revolute joints tha
 > - $\dot{\theta} = \frac{d\theta}{dt}$ = **velocity** (angular velocity)
 > - $\ddot{\theta} = \frac{d^2\theta}{dt^2}$ = **acceleration** (angular acceleration)
 
-- Further noted in matrix form:
+- Further noted in [Jacobian matrix](#supplement-2-jacobian-matrix) form:
 
 ​	$$\underbrace{\begin{bmatrix} \frac{\partial g_1}{\partial \theta_1} & \dots & \frac{\partial g_1}{\partial \theta_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial g_k}{\partial \theta_1} & \dots & \frac{\partial g_k}{\partial \theta_n} \end{bmatrix}}_{\text{The Jacobian Matrix } A(\theta)} \cdot \underbrace{\begin{bmatrix} \dot{\theta}_1 \\ \vdots \\ \dot{\theta}_n \end{bmatrix}}_{\text{Velocity Vector } \dot{\theta}} = \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix}$$ 
 
@@ -340,7 +340,10 @@ Example:
 
 ## Supplement 1: Partial Derivatives
 
-> Reference: [Partial Derivatives and the Gradient of a Function by Professor Dave Explains - Youtube](https://youtu.be/AXH9Xm6Rbfc?si=Hi2mEpz1IyRVZb0v) 
+> Reference
+>
+> 1. [Partial Derivatives and the Gradient of a Function by Professor Dave Explains - Youtube](https://youtu.be/AXH9Xm6Rbfc?si=Hi2mEpz1IyRVZb0v) 
+> 2. [The Jacobian Matrix by Christopher Lum - Youtube](https://youtu.be/QexBVGVM690?si=TXnUbeAiJf-dQFwF) 
 
 - For regular single-variable derivatives, such as $f(x) = sin(x)$, we know $\frac{df}{dx} = cos(x)\,dx$.  
 
@@ -371,13 +374,13 @@ Example:
 
   - Given that: 
 
-    $$\bar{x} = \begin{bmatrix} \ x_1 \\\ x_2 \\\ \vdots \\\ x_n \end{bmatrix}$$
+    $$\bar{x} = \begin{bmatrix} \ x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$$
 
     $$f(x_1,x_2) = 3(x_1)^2+(x_2)^2$$
 
   - As the gradient of a function follows: 
 
-    $$\triangledown f(\bar{x}) = \frac{\partial f(\bar{x})}{\partial \bar{x}} = \begin{bmatrix}\frac{\partial f(\bar{x})}{\partial x_1} \\\ \frac{\partial f(\bar{x})}{\partial x_2} \\\ \vdots  \\\ \frac{\partial f(\bar{x})}{\partial x_n} \end{bmatrix}$$
+    $$\triangledown f(\bar{x}) = \frac{\partial f(\bar{x})}{\partial \bar{x}} = \begin{bmatrix}\frac{\partial f(\bar{x})}{\partial x_1} \\ \frac{\partial f(\bar{x})}{\partial x_2} \\ \vdots  \\ \frac{\partial f(\bar{x})}{\partial x_n} \end{bmatrix}$$
 
     We can calculate: 
 
@@ -398,7 +401,27 @@ Example:
 
 > Reference: [The Jacobian Matrix by Christopher Lum - Youtube](https://youtu.be/QexBVGVM690?si=TXnUbeAiJf-dQFwF) 
 
-- A Jacobian Matrix is a partial set of derivatives asking how do each one of the functions change the input variables
+![jacobian-matrix](./assets/jacobian.jpg)
+
+- A Jacobian Matrix is a giant matrix of **all the gradients** (mixed partial derivatives) **stacked on top of each other**, of the scalar functions in the **vector function**. 
+- A vector function ( $\bar{f}$ ) is basically multiple scalar functions ( $f_1,f_2,f_3...$ ) stacked on top of each other (like the diagram above). 
+- The Jacobian Matrix uses **row vectors** for every function inside. 
+
+- $$J = \frac{\partial \bar{f}}{\partial \bar{x}} = \begin{bmatrix} \triangledown f_1(\bar{x})^T \\ \triangledown f_2(\bar{x})^T \\ \vdots \\ \triangledown f_m(\bar{x})^T \end{bmatrix} = \begin{bmatrix} \frac{\partial f_1(\bar{x})}{\partial x_1} & \frac{\partial f_1(\bar{x})}{\partial x_2} & \dots & \frac{\partial f_1(\bar{x})}{\partial x_n} \\ \frac{\partial f_2(\bar{x})}{\partial x_1} & \frac{\partial f_2(\bar{x})}{\partial x_2} & \dots & \frac{\partial f_2(\bar{x})}{\partial x_n} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial f_m(\bar{x})}{\partial x_1} & \frac{\partial f_m(\bar{x})}{\partial x_2} & \dots & \frac{\partial f_m(\bar{x})}{\partial x_n}\end{bmatrix}$$ 
+
+- $J_{ij} =$ **the sensitivity of function $\bar{f}$ ’s $i^{\text{th}}$ output to change in $x_j$.**  
+
+
+
+Practice Example: 
+
+- $$\bar{f}(\bar{x}) = \begin{bmatrix} 3(x_1)^2 + (x_2)^3 \\ cos(x_1)x_2 \\ x_1(x_2)^2\end{bmatrix}$$ 
+
+- Outlining gradient of the vector function $\bar{f}(\bar{x})$, we got a 3x2 matrix:  
+
+  $$J(\bar{x}) = \frac{\partial \bar{f}}{\partial \bar{x}} = \begin{bmatrix} 6x_1 & 3(x_2)^2 \\ -x_2\sin(x_1) & cos(x_1) \\ (x_2)^2 & 2x_1x_2 \end{bmatrix}$$ 
+
+> Further reading: Chain Rule in matrix form for multi-variable system. 
 
 
 
